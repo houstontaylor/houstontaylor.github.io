@@ -13,67 +13,70 @@ export default function Footer() {
     { name: 'Dribbble', url: 'https://dribbble.com/yourusername' },
   ];
 
-  const footerVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        staggerChildren: 0.1,
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0 }
-  };
-
   return (
-    <motion.footer
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      variants={footerVariants}
-      className="border-t border-muted/20 mt-24 py-12 bg-background"
-    >
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          <motion.div variants={itemVariants} className="space-y-2">
-            <h3 className="text-lg font-display font-medium">Houston Taylor</h3>
-            <p className="text-sm text-foreground/70">
+    <footer className="py-16 border-t border-muted/20">
+      <div className="container mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+          <div className="space-y-4">
+            <Link href="/" className="text-xl font-medium">
+              Houston Taylor
+            </Link>
+            <p className="text-foreground/70 max-w-xs">
               UI/UX Designer & Frontend Developer creating thoughtful, engaging digital experiences.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemVariants} className="space-y-2">
-            <h3 className="text-lg font-display font-medium">Links</h3>
-            <ul className="space-y-1">
-              <li><Link href="/" className="text-sm text-foreground/70 hover:text-accent transition-colors">Home</Link></li>
-              <li><Link href="/projects" className="text-sm text-foreground/70 hover:text-accent transition-colors">Projects</Link></li>
-              <li><Link href="/about" className="text-sm text-foreground/70 hover:text-accent transition-colors">About</Link></li>
-              <li><Link href="/contact" className="text-sm text-foreground/70 hover:text-accent transition-colors">Contact</Link></li>
-            </ul>
-          </motion.div>
+          <div className="space-y-4">
+            <h3 className="text-lg font-medium">Navigation</h3>
+            <nav className="flex flex-col space-y-2">
+              <Link href="/" className="text-foreground/70 hover:text-accent transition-colors w-fit hover-link">
+                Home
+              </Link>
+              <Link href="/projects" className="text-foreground/70 hover:text-accent transition-colors w-fit hover-link">
+                Projects
+              </Link>
+              <Link href="/about" className="text-foreground/70 hover:text-accent transition-colors w-fit hover-link">
+                About
+              </Link>
+              <Link href="/contact" className="text-foreground/70 hover:text-accent transition-colors w-fit hover-link">
+                Contact
+              </Link>
+            </nav>
+          </div>
 
-          <motion.div variants={itemVariants} className="space-y-2">
-            <h3 className="text-lg font-display font-medium">Connect</h3>
-            <ul className="space-y-1">
+          <div className="space-y-4">
+            <h3 className="text-lg font-medium">Connect</h3>
+            <div className="flex flex-col space-y-2">
               {socialLinks.map((link) => (
-                <li key={link.name}>
-                  <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-sm text-foreground/70 hover:text-accent transition-colors">
-                    {link.name}
-                  </a>
-                </li>
+                <a 
+                  key={link.name} 
+                  href={link.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-foreground/70 hover:text-accent transition-colors w-fit hover-link"
+                >
+                  {link.name}
+                </a>
               ))}
-            </ul>
-          </motion.div>
+            </div>
+          </div>
         </div>
 
-        <motion.div variants={itemVariants} className="text-center text-sm text-foreground/50 pt-4 border-t border-muted/10">
-          © {currentYear} Houston Taylor. All rights reserved.
-        </motion.div>
+        <div className="mt-16 pt-8 border-t border-muted/10 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm text-foreground/50">
+            © {currentYear} Houston Taylor. All rights reserved.
+          </p>
+          
+          <motion.a 
+            href="mailto:contact@houstontaylor.com"
+            className="text-sm text-foreground/50 hover:text-accent transition-colors mt-4 md:mt-0"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+          >
+            contact@houstontaylor.com
+          </motion.a>
+        </div>
       </div>
-    </motion.footer>
+    </footer>
   );
 }

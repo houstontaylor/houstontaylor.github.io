@@ -5,36 +5,76 @@ import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center py-20">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="max-w-3xl mx-auto text-center"
-        >
-          <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
-            Hi, I'm <span className="text-accent">Houston Taylor</span>
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 text-foreground/80">
-            UI/UX Designer & Frontend Developer creating thoughtful, engaging digital experiences.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/projects" 
-              className="px-8 py-3 bg-accent text-white rounded-md font-medium hover:bg-accent/90 transition-colors"
+    <section className="min-h-screen flex items-center justify-center">
+      <div className="container">
+        <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="text-center md:text-left"
+          >
+            <h1 className="text-4xl md:text-6xl lg:text-7xl mb-6 leading-tight">
+              Hi, I'm <span className="text-accent">Houston&nbsp;Taylor</span>
+            </h1>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="text-xl text-foreground/80 mb-10 max-w-xl mx-auto md:mx-0"
             >
-              View My Work
-            </Link>
-            <Link 
-              href="/contact"
-              className="px-8 py-3 border border-foreground/20 rounded-md font-medium hover:bg-foreground/5 transition-colors"
+              UI/UX Designer & Frontend Developer creating thoughtful, engaging digital experiences.
+            </motion.p>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col sm:flex-row gap-5 justify-center md:justify-start"
             >
-              Contact Me
-            </Link>
-          </div>
-        </motion.div>
+              <Link 
+                href="/projects" 
+                className="btn-primary"
+              >
+                View My Work
+              </Link>
+              <Link 
+                href="/contact"
+                className="btn-outline"
+              >
+                Contact Me
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
+      
+      <motion.div 
+        className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ 
+          duration: 1.5,
+          delay: 1,
+          repeat: Infinity,
+          repeatType: "reverse"
+        }}
+      >
+        <svg 
+          width="24" 
+          height="24" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+          className="text-foreground/50"
+        >
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+      </motion.div>
     </section>
   );
 }

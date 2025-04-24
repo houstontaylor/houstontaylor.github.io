@@ -18,16 +18,17 @@ export default function PageTransition({ children }: PageTransitionProps) {
 
   return (
     <AnimatePresence mode="wait">
-      <motion.div
+      <motion.main
         key={pathname}
         initial="hidden"
         animate="enter"
         exit="exit"
         variants={variants}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="min-h-screen"
       >
         {children}
-      </motion.div>
+      </motion.main>
     </AnimatePresence>
   );
 }

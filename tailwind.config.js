@@ -1,38 +1,103 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    darkMode: "class",
-    content: [
-      './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-      './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-      './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    ],
-    theme: {
-      extend: {
-        colors: {
-          background: 'rgb(var(--background) / <alpha-value>)',
-          foreground: 'rgb(var(--foreground) / <alpha-value>)',
-          muted: 'rgb(var(--muted) / <alpha-value>)',
-          accent: 'rgb(var(--accent) / <alpha-value>)',
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  darkMode: "class",
+  theme: {
+    extend: {
+      fontSize: {
+        'xs': '0.75rem',
+        'sm': '0.875rem',
+        'base': '1rem',
+        'lg': '1.125rem',
+        'xl': '1.25rem',
+        '2xl': '1.5rem',
+        '3xl': '1.875rem',
+        '4xl': '2.25rem',
+        '5xl': '3rem',
+        '6xl': '3.75rem',
+        '7xl': '4.5rem',
+      },
+      fontWeight: {
+        'light': '300',
+        'normal': '400',
+        'medium': '500',
+        'semibold': '600',
+        'bold': '700',
+      },
+      borderRadius: {
+        'none': '0',
+        'sm': '0.125rem',
+        'DEFAULT': '0.25rem',
+        'md': '0.375rem',
+        'lg': '0.5rem',
+        'xl': '0.75rem',
+        '2xl': '1rem',
+        'full': '9999px',
+      },
+      colors: {
+        'background': 'rgb(var(--background) / <alpha-value>)',
+        'foreground': 'rgb(var(--foreground) / <alpha-value>)',
+        'muted': 'rgb(var(--muted) / <alpha-value>)',
+        'accent': 'rgb(var(--accent) / <alpha-value>)',
+        'secondary': 'rgb(var(--secondary) / <alpha-value>)',
+        'white': '#ffffff',
+        'black': '#000000',
+      },
+      spacing: {
+        '0': '0px',
+        '1': '0.25rem',
+        '2': '0.5rem',
+        '3': '0.75rem',
+        '4': '1rem',
+        '5': '1.25rem',
+        '6': '1.5rem',
+        '8': '2rem',
+        '10': '2.5rem',
+        '12': '3rem',
+        '16': '4rem',
+        '20': '5rem',
+        '24': '6rem',
+        '32': '8rem',
+        '40': '10rem',
+        '48': '12rem',
+        '56': '14rem',
+        '64': '16rem',
+        '72': '18rem',
+        '80': '20rem',
+        '96': '24rem',
+      },
+      keyframes: {
+        fadeIn: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
         },
-        fontFamily: {
-          sans: ['var(--font-inter)'],
-          display: ['var(--font-playfair)'],
+        fadeOut: {
+          from: { opacity: 1 },
+          to: { opacity: 0 },
         },
-        keyframes: {
-          fadeIn: {
-            from: { opacity: 0 },
-            to: { opacity: 1 },
-          },
-          fadeOut: {
-            from: { opacity: 1 },
-            to: { opacity: 0 },
-          },
+        slideUp: {
+          from: { transform: 'translateY(10px)', opacity: 0 },
+          to: { transform: 'translateY(0)', opacity: 1 },
         },
-        animation: {
-          fadeIn: 'fadeIn 0.5s ease-in-out forwards',
-          fadeOut: 'fadeOut 0.5s ease-in-out forwards',
+        slideDown: {
+          from: { transform: 'translateY(-10px)', opacity: 0 },
+          to: { transform: 'translateY(0)', opacity: 1 },
         },
       },
+      animation: {
+        fadeIn: 'fadeIn 0.5s ease-in-out forwards',
+        fadeOut: 'fadeOut 0.5s ease-in-out forwards',
+        slideUp: 'slideUp 0.5s ease-out forwards',
+        slideDown: 'slideDown 0.5s ease-out forwards',
+      },
+      transitionDuration: {
+        '2000': '2000ms',
+      }
     },
-    plugins: [],
-  };
+  },
+  plugins: [],
+}

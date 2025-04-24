@@ -15,26 +15,51 @@ export default function ThemeToggle() {
   const isDark = theme === 'dark';
 
   return (
-    <button
+    <motion.button
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
-        isDark ? 'bg-accent/30' : 'bg-muted'
-      } focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2`}
+      whileTap={{ scale: 0.95 }}
+      className="relative w-10 h-10 rounded-full flex items-center justify-center focus:outline-none"
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
-      <span className="sr-only">Toggle theme</span>
-      
-      {/* Toggle thumb */}
       <motion.div
-        className={`h-4 w-4 rounded-full bg-background shadow transition-transform`}
-        layout
-        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        style={{
-          transform: isDark ? 'translateX(1.25rem)' : 'translateX(0.25rem)',
+        initial={false}
+        animate={{
+          rotate: isDark ? 40 : 0,
+          scale: isDark ? 0.8 : 1
         }}
-      />
-
-      <span className="absolute left-1 text-xs">☀️</span>
-      <span className="absolute right-1 text-xs">🌙</span>
-    </button>
+        transition={{ duration: 0.5, ease: [0.175, 0.885, 0.32, 1.275] }}
+      >
+        {isDark ? (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path 
+              d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            />
+          </svg>
+        ) : (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle 
+              cx="12" 
+              cy="12" 
+              r="5" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            />
+            <path 
+              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
+      </motion.div>
+    </motion.button>
   );
 }

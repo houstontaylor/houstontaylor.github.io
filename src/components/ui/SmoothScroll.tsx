@@ -8,14 +8,14 @@ interface SmoothScrollProps {
 }
 
 export default function SmoothScroll({ children }: SmoothScrollProps) {
-  // Change the type here to handle Lenis correctly
+  // Use a ref to store the Lenis instance
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Create a new Lenis instance
+    // Create a new Lenis instance with smoother settings
     const lenis = new Lenis({
       duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential ease out
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
@@ -25,10 +25,10 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       infinite: false,
     });
     
-    // Store it in the ref
+    // Store the instance in the ref
     lenisRef.current = lenis;
 
-    // Create the animation frame
+    // Create the animation frame loop function
     function raf(time: number) {
       if (lenisRef.current) {
         lenisRef.current.raf(time);
@@ -36,13 +36,14 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       requestAnimationFrame(raf);
     }
 
-    // Start the animation
+    // Start the animation loop
     requestAnimationFrame(raf);
 
-    // Cleanup function
+    // Clean up the Lenis instance when component unmounts
     return () => {
       if (lenisRef.current) {
         lenisRef.current.destroy();
+        lenisRef.current = null;
       }
     };
   }, []);

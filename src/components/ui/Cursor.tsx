@@ -1,25 +1,41 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, Variants } from 'framer-motion';
+import { motion, useSpring, useMotionValue } from 'framer-motion';
 import useMousePosition from '@/hooks/useMousePosition';
 
 export default function CustomCursor() {
-  const [isClicking, setIsClicking] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const { x, y } = useMousePosition();
+  const [isClicking, setIsClicking] = useState(false);
+  const mousePosition = useMousePosition();
+  
+  // Create spring-animated values for smoother cursor movement
+  const cursorX = useSpring(useMotionValue(0), { stiffness: 700, damping: 50 });
+  const cursorY = useSpring(useMotionValue(0), { stiffness: 700, damping: 50 });
+  const dotX = useSpring(useMotionValue(0), { stiffness: 800, damping: 40 });
+  const dotY = useSpring(useMotionValue(0), { stiffness: 800, damping: 40 });
 
   useEffect(() => {
-    const handleMouseEnter = () => setIsHovering(true);
-    const handleMouseLeave = () => setIsHovering(false);
+    if (mousePosition.x !== null && mousePosition.y !== null) {
+      cursorX.set(mousePosition.x - 16);
+      cursorY.set(mousePosition.y - 16);
+      dotX.set(mousePosition.x - 3);
+      dotY.set(mousePosition.y - 3);
+    }
+  }, [mousePosition, cursorX, cursorY, dotX, dotY]);
+
+  useEffect(() => {
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
+    
+    const handleMouseEnter = () => setIsHovering(true);
+    const handleMouseLeave = () => setIsHovering(false);
 
     document.addEventListener('mousedown', handleMouseDown);
     document.addEventListener('mouseup', handleMouseUp);
 
-    const hoverable = document.querySelectorAll('a, button, [data-hoverable]');
-    hoverable.forEach((el) => {
+    const interactiveElements = document.querySelectorAll('a, button, [data-hover]');
+    interactiveElements.forEach((el) => {
       el.addEventListener('mouseenter', handleMouseEnter);
       el.addEventListener('mouseleave', handleMouseLeave);
     });
@@ -27,87 +43,56 @@ export default function CustomCursor() {
     return () => {
       document.removeEventListener('mousedown', handleMouseDown);
       document.removeEventListener('mouseup', handleMouseUp);
-      hoverable.forEach((el) => {
+      
+      interactiveElements.forEach((el) => {
         el.removeEventListener('mouseenter', handleMouseEnter);
         el.removeEventListener('mouseleave', handleMouseLeave);
       });
     };
   }, []);
 
-  const cursorVariants: Variants = {
-    default: {
-      height: 32,
-      width: 32,
-      backgroundColor: 'rgba(var(--foreground) / 0.1)',
-      border: '1px solid rgba(var(--foreground) / 0.15)',
-      x: x ? x - 16 : -100,
-      y: y ? y - 16 : -100,
-      mixBlendMode: 'difference',
-      borderRadius: '50%',
-    },
-    hover: {
-      height: 48,
-      width: 48,
-      backgroundColor: 'rgba(var(--accent) / 0.2)',
-      border: '1px solid rgba(var(--accent) / 0.3)',
-      x: x ? x - 24 : -100,
-      y: y ? y - 24 : -100,
-      borderRadius: '50%',
-    },
-    click: {
-      height: 24,
-      width: 24,
-      backgroundColor: 'rgba(var(--accent) / 0.4)',
-      x: x ? x - 12 : -100,
-      y: y ? y - 12 : -100,
-      borderRadius: '50%',
-    },
-  };
-
-  const dotVariants: Variants = {
-    default: {
-      height: 6,
-      width: 6,
-      backgroundColor: 'rgb(var(--foreground))',
-      x: x ? x - 3 : -100,
-      y: y ? y - 3 : -100,
-      mixBlendMode: 'difference',
-      borderRadius: '50%',
-    },
-    hover: {
-      height: 10,
-      width: 10,
-      backgroundColor: 'rgb(var(--accent))',
-      x: x ? x - 5 : -100,
-      y: y ? y - 5 : -100,
-      borderRadius: '50%',
-    },
-    click: {
-      height: 0,
-      width: 0,
-      x: x || -100,
-      y: y || -100,
-      borderRadius: '50%',
-    },
-  };
-
-  const cursorState = isClicking ? 'click' : isHovering ? 'hover' : 'default';
-
   return (
     <div className="fixed inset-0 z-50 pointer-events-none">
+      {/* Main cursor */}
       <motion.div
-        className="fixed rounded-full"
-        variants={cursorVariants}
-        animate={cursorState}
-        transition={{ duration: 0.15, ease: 'easeOut' }}
-        style={{ opacity: 1 }}
+        style={{
+          x: cursorX,
+          y: cursorY,
+        }}
+        animate={{
+          height: isHovering ? 48 : isClicking ? 24 : 32,
+          width: isHovering ? 48 : isClicking ? 24 : 32,
+          borderRadius: '50%',
+          opacity: 0.3,
+          border: isHovering 
+            ? '1px solid rgba(var(--accent) / 0.5)' 
+            : '1px solid rgba(var(--foreground) / 0.3)',
+          backgroundColor: isHovering 
+            ? 'rgba(var(--accent) / 0.05)' 
+            : isClicking 
+              ? 'rgba(var(--foreground) / 0.1)' 
+              : 'transparent',
+        }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+        className="fixed rounded-full mix-blend-difference"
       />
+      
+      {/* Dot cursor */}
       <motion.div
-        className="fixed rounded-full"
-        variants={dotVariants}
-        animate={cursorState}
-        transition={{ duration: 0.1 }}
-        style={{ opacity: 1 }}
+        style={{
+          x: dotX,
+          y: dotY,
+        }}
+        animate={{
+          height: isHovering ? 10 : isClicking ? 0 : 6,
+          width: isHovering ? 10 : isClicking ? 0 : 6,
+          opacity: isClicking ? 0 : 1,
+          backgroundColor: isHovering 
+            ? 'rgba(var(--accent) / 1)' 
+            : 'rgba(var(--foreground) / 1)',
+        }}
+        transition={{ duration: 0.15, ease: "easeOut" }}
+        className="fixed rounded-full mix-blend-difference"
       />
     </div>
   );
