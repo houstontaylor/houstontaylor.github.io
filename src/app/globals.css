@@ -3,24 +3,27 @@
 @tailwind utilities;
 
 :root {
-  --background: 255, 255, 255;
-  --foreground: 30, 30, 30;
-  --muted: 240, 240, 240;
-  --accent: 240, 55, 165;
-  --secondary: 100, 100, 100;
+  --background: 250, 250, 250;
+  --foreground: 40, 40, 40;
+  --muted: 230, 230, 230;
+  --accent: 236, 72, 153;      /* Pink */
+  --secondary-accent: 74, 222, 128;  /* Green */
 }
 
 .dark {
   --background: 20, 20, 20;
   --foreground: 240, 240, 240;
   --muted: 40, 40, 40;
-  --accent: 240, 55, 165;
-  --secondary: 180, 180, 180;
+  --accent: 236, 72, 153;      /* Pink */
+  --secondary-accent: 74, 222, 128;  /* Green */
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   body {
@@ -30,12 +33,23 @@
     font-size: 1rem;
     line-height: 1.5;
     font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden;
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-playfair), serif;
     font-weight: 500;
     letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+  }
+
+  h2 {
+    font-size: clamp(2rem, 6vw, 3.5rem);
   }
 
   p {
@@ -44,8 +58,8 @@
 
   a {
     color: rgb(var(--foreground));
-    transition-property: all;
-    transition-duration: 300ms;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
   }
   
   a:hover {
@@ -55,17 +69,25 @@
 
 @layer components {
   .container {
-    max-width: 72rem;
+    width: 100%;
+    max-width: 1440px;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
   
-  @media (min-width: 640px) {
+  @media (min-width: 768px) {
     .container {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .container {
+      padding-left: 3rem;
+      padding-right: 3rem;
     }
   }
 
@@ -76,39 +98,63 @@
   
   @media (min-width: 768px) {
     .section {
-      padding-top: 6rem;
-      padding-bottom: 6rem;
+      padding-top: 7rem;
+      padding-bottom: 7rem;
     }
   }
 
+  /* Button styles with pink and green accents */
   .btn {
     display: inline-block;
-    padding: 0.5rem 1.5rem;
+    padding: 0.75rem 1.75rem;
     font-weight: 500;
-    transition-property: all;
-    transition-duration: 300ms;
+    transition: all 0.3s ease;
+    border-radius: 0;
+    position: relative;
+    overflow: hidden;
+    min-width: auto;
+    max-width: fit-content;
   }
   
   .btn:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(var(--accent), 0.15);
   }
 
   .btn-primary {
     background-color: rgb(var(--accent));
     color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
   }
-  
-  .btn-primary:hover {
-    background-color: rgba(var(--accent), 0.9);
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: -1;
+    transition: width 0.3s ease;
+  }
+
+  .btn-primary:hover::before {
+    width: 100%;
   }
 
   .btn-outline {
-    border: 1px solid rgba(var(--foreground), 0.2);
+    background-color: transparent;
+    border: 1px solid rgba(var(--secondary-accent), 0.5);
+    color: rgb(var(--secondary-accent));
   }
-  
+
   .btn-outline:hover {
-    border-color: rgb(var(--accent));
-    color: rgb(var(--accent));
+    border-color: rgb(var(--secondary-accent));
+    background-color: rgba(var(--secondary-accent), 0.05);
   }
 }
 
@@ -116,11 +162,26 @@
   .text-balance {
     text-wrap: balance;
   }
+  
+  .font-display {
+    font-family: var(--font-playfair), serif;
+  }
+  
+  .font-mono {
+    font-family: var(--font-mono), monospace;
+  }
 }
 
 /* Custom cursor styling */
-* {
-  cursor: none;
+html, body, a, button, input, textarea, select {
+  cursor: none !important;
+}
+
+/* Turn cursor back on for mobile devices */
+@media (max-width: 768px) {
+  html, body, a, button, input, textarea, select {
+    cursor: auto !important;
+  }
 }
 
 /* Smooth scrolling */
@@ -144,28 +205,28 @@ html.lenis {
   pointer-events: none;
 }
 
-/* Animations */
-.animate-reveal {
+/* Page transitions */
+.page-enter {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-.animate-reveal.in-view {
+.page-enter-active {
   opacity: 1;
   transform: translateY(0);
+  transition: opacity 800ms, transform 800ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.animate-reveal-delay-1 {
-  transition-delay: 0.1s;
+.page-exit {
+  opacity: 1;
 }
 
-.animate-reveal-delay-2 {
-  transition-delay: 0.2s;
-}
-
-.animate-reveal-delay-3 {
-  transition-delay: 0.3s;
+.page-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 400ms, transform 400ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Hover effects */
@@ -186,4 +247,54 @@ html.lenis {
 
 .hover-link:hover::after {
   width: 100%;
+}
+
+/* Section divider */
+.section-divider {
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(var(--accent), 0.2), transparent);
+  margin: 4rem auto;
+  width: 80%;
+  max-width: 800px;
+}
+
+/* Project card styling with pink/green accents */
+.project-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+}
+
+.project-card-image {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-card:hover .project-card-image {
+  transform: scale(1.05);
+}
+
+.project-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(var(--accent), 0.05);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.project-card:hover .project-card-overlay {
+  opacity: 1;
+}
+
+/* Text gradient for special elements */
+.text-gradient {
+  background: linear-gradient(90deg, rgb(var(--accent)), rgb(var(--secondary-accent)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }

@@ -4,77 +4,108 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 export default function Hero() {
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.8, 
+        ease: [0.22, 1, 0.36, 1] 
+      }
+    }
+  };
+
+  const staggerChildren = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
+  };
+
   return (
-    <section className="min-h-screen flex items-center justify-center">
-      <div className="container">
-        <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
+    <section className="min-h-screen flex flex-col justify-center relative">
+      <div className="container mx-auto">
+        <div className="grid grid-cols-1 gap-12 max-w-6xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center md:text-left"
+            initial="hidden"
+            animate="visible"
+            variants={staggerChildren}
+            className="text-center pt-16 md:pt-0"
           >
-            <h1 className="text-4xl md:text-6xl lg:text-7xl mb-6 leading-tight">
-              Hi, I'm <span className="text-accent">Houston&nbsp;Taylor</span>
-            </h1>
+            <motion.div variants={fadeInUp} className="mb-4">
+              <span className="text-pink-500 text-sm tracking-widest uppercase font-mono">Stanford University</span>
+            </motion.div>
+            
+            <motion.h1 
+              variants={fadeInUp}
+              className="font-display leading-none text-6xl md:text-7xl lg:text-8xl tracking-tighter mb-8"
+            >
+              UI/UX Designer &<br className="hidden md:block" />
+              Frontend Developer
+            </motion.h1>
             
             <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-xl text-foreground/80 mb-10 max-w-xl mx-auto md:mx-0"
+              variants={fadeInUp}
+              className="text-xl md:text-2xl text-foreground/70 max-w-2xl mx-auto mt-6 mb-12"
             >
-              UI/UX Designer & Frontend Developer creating thoughtful, engaging digital experiences.
+              Creating thoughtful, engaging digital experiences.
             </motion.p>
             
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col sm:flex-row gap-5 justify-center md:justify-start"
+              variants={fadeInUp}
+              className="flex flex-col sm:flex-row gap-6 justify-center mt-10"
             >
               <Link 
                 href="/projects" 
-                className="btn-primary"
+                className="mx-auto sm:mx-0 btn btn-primary"
               >
                 View My Work
               </Link>
               <Link 
                 href="/contact"
-                className="btn-outline"
+                className="mx-auto sm:mx-0 btn btn-outline"
               >
-                Contact Me
+                Get In Touch
               </Link>
             </motion.div>
           </motion.div>
         </div>
       </div>
       
-      <motion.div 
-        className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ 
-          duration: 1.5,
-          delay: 1,
-          repeat: Infinity,
-          repeatType: "reverse"
-        }}
-      >
-        <svg 
-          width="24" 
-          height="24" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="2" 
-          strokeLinecap="round" 
-          strokeLinejoin="round"
-          className="text-foreground/50"
+      {/* Fixed scroll arrow at bottom of viewport */}
+      <div className="absolute bottom-10 left-0 right-0 flex justify-center">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ 
+            opacity: [0.3, 0.8, 0.3], 
+            y: [0, 10, 0]
+          }}
+          transition={{ 
+            duration: 2,
+            repeat: Infinity,
+            repeatType: "loop"
+          }}
         >
-          <path d="M12 5v14M5 12l7 7 7-7"/>
-        </svg>
-      </motion.div>
+          <svg 
+            width="32" 
+            height="32" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+            className="text-pink-500"
+          >
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+          </svg>
+        </motion.div>
+      </div>
     </section>
   );
 }

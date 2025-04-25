@@ -1,98 +1,116 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, useSpring, useMotionValue } from 'framer-motion';
-import useMousePosition from '@/hooks/useMousePosition';
+import { motion } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [isHovering, setIsHovering] = useState(false);
-  const [isClicking, setIsClicking] = useState(false);
-  const mousePosition = useMousePosition();
-  
-  // Create spring-animated values for smoother cursor movement
-  const cursorX = useSpring(useMotionValue(0), { stiffness: 700, damping: 50 });
-  const cursorY = useSpring(useMotionValue(0), { stiffness: 700, damping: 50 });
-  const dotX = useSpring(useMotionValue(0), { stiffness: 800, damping: 40 });
-  const dotY = useSpring(useMotionValue(0), { stiffness: 800, damping: 40 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [visible, setVisible] = useState(false);
+  const [clicking, setClicking] = useState(false);
+  const [hovering, setHovering] = useState(false);
 
   useEffect(() => {
-    if (mousePosition.x !== null && mousePosition.y !== null) {
-      cursorX.set(mousePosition.x - 16);
-      cursorY.set(mousePosition.y - 16);
-      dotX.set(mousePosition.x - 3);
-      dotY.set(mousePosition.y - 3);
-    }
-  }, [mousePosition, cursorX, cursorY, dotX, dotY]);
+    // Function to handle cursor position
+    const updatePosition = (e) => {
+      setPosition({ x: e.clientX, y: e.clientY });
+    };
 
-  useEffect(() => {
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
+    // Function to handle cursor visibility
+    const handleMouseEnter = () => setVisible(true);
+    const handleMouseLeave = () => setVisible(false);
     
-    const handleMouseEnter = () => setIsHovering(true);
-    const handleMouseLeave = () => setIsHovering(false);
+    // Mouse down/up handlers
+    const handleMouseDown = () => setClicking(true);
+    const handleMouseUp = () => setClicking(false);
+    
+    // Interactive elements handler
+    const handleElementHover = () => setHovering(true);
+    const handleElementLeave = () => setHovering(false);
 
+    // Add event listeners
+    document.addEventListener('mousemove', updatePosition);
+    document.addEventListener('mouseenter', handleMouseEnter);
+    document.addEventListener('mouseleave', handleMouseLeave);
     document.addEventListener('mousedown', handleMouseDown);
     document.addEventListener('mouseup', handleMouseUp);
-
-    const interactiveElements = document.querySelectorAll('a, button, [data-hover]');
-    interactiveElements.forEach((el) => {
-      el.addEventListener('mouseenter', handleMouseEnter);
-      el.addEventListener('mouseleave', handleMouseLeave);
+    
+    // Add cursor-ready class to body after a delay
+    setTimeout(() => {
+      document.body.classList.add('cursor-ready');
+    }, 500);
+    
+    // Find all interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, input, select, textarea, [role="button"]');
+    
+    interactiveElements.forEach(el => {
+      el.addEventListener('mouseenter', handleElementHover);
+      el.addEventListener('mouseleave', handleElementLeave);
     });
 
+    // Clean up event listeners
     return () => {
+      document.removeEventListener('mousemove', updatePosition);
+      document.removeEventListener('mouseenter', handleMouseEnter);
+      document.removeEventListener('mouseleave', handleMouseLeave);
       document.removeEventListener('mousedown', handleMouseDown);
       document.removeEventListener('mouseup', handleMouseUp);
       
-      interactiveElements.forEach((el) => {
-        el.removeEventListener('mouseenter', handleMouseEnter);
-        el.removeEventListener('mouseleave', handleMouseLeave);
+      interactiveElements.forEach(el => {
+        el.removeEventListener('mouseenter', handleElementHover);
+        el.removeEventListener('mouseleave', handleElementLeave);
       });
+      
+      document.body.classList.remove('cursor-ready');
     };
   }, []);
 
+  // Don't render on small screens
+  if (typeof window !== 'undefined' && window.innerWidth < 768) {
+    return null;
+  }
+
   return (
-    <div className="fixed inset-0 z-50 pointer-events-none">
-      {/* Main cursor */}
+    <div className="custom-cursor">
+      {/* Main cursor circle */}
       <motion.div
+        className="fixed rounded-full mix-blend-difference pointer-events-none z-[9999]"
         style={{
-          x: cursorX,
-          y: cursorY,
+          left: position.x,
+          top: position.y,
+          translateX: "-50%",
+          translateY: "-50%"
         }}
         animate={{
-          height: isHovering ? 48 : isClicking ? 24 : 32,
-          width: isHovering ? 48 : isClicking ? 24 : 32,
-          borderRadius: '50%',
-          opacity: 0.3,
-          border: isHovering 
-            ? '1px solid rgba(var(--accent) / 0.5)' 
-            : '1px solid rgba(var(--foreground) / 0.3)',
-          backgroundColor: isHovering 
-            ? 'rgba(var(--accent) / 0.05)' 
-            : isClicking 
-              ? 'rgba(var(--foreground) / 0.1)' 
-              : 'transparent',
-        }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
-        className="fixed rounded-full mix-blend-difference"
-      />
-      
-      {/* Dot cursor */}
-      <motion.div
-        style={{
-          x: dotX,
-          y: dotY,
-        }}
-        animate={{
-          height: isHovering ? 10 : isClicking ? 0 : 6,
-          width: isHovering ? 10 : isClicking ? 0 : 6,
-          opacity: isClicking ? 0 : 1,
-          backgroundColor: isHovering 
-            ? 'rgba(var(--accent) / 1)' 
-            : 'rgba(var(--foreground) / 1)',
+          width: hovering ? 50 : clicking ? 20 : 30,
+          height: hovering ? 50 : clicking ? 20 : 30,
+          border: hovering 
+            ? "1px solid rgba(236, 72, 153, 0.8)" 
+            : "1px solid rgba(255, 255, 255, 0.5)",
+          backgroundColor: hovering 
+            ? "rgba(236, 72, 153, 0.05)"
+            : clicking 
+              ? "rgba(255, 255, 255, 0.2)"
+              : "transparent",
+          opacity: visible ? 1 : 0
         }}
         transition={{ duration: 0.15, ease: "easeOut" }}
-        className="fixed rounded-full mix-blend-difference"
+      />
+      
+      {/* Cursor dot */}
+      <motion.div
+        className="fixed rounded-full bg-pink-500 mix-blend-difference pointer-events-none z-[9999]"
+        style={{
+          left: position.x,
+          top: position.y,
+          translateX: "-50%",
+          translateY: "-50%"
+        }}
+        animate={{
+          width: hovering ? 8 : clicking ? 0 : 5,
+          height: hovering ? 8 : clicking ? 0 : 5,
+          opacity: clicking ? 0 : (visible ? 1 : 0)
+        }}
+        transition={{ duration: 0.1 }}
       />
     </div>
   );

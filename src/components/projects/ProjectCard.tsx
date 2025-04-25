@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface Project {
   id: string;
@@ -30,45 +31,51 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       transition={{ duration: 0.8, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group"
+      className="group project-card"
     >
       <Link href={`/projects/${project.slug}`} className="block">
-        <div className="relative aspect-video overflow-hidden mb-6">
-          {/* Replace with actual image when available */}
-          <div className="absolute inset-0 bg-muted/30 flex items-center justify-center">
-            <span className="text-foreground/30">{project.title}</span>
+        <div className="relative aspect-video overflow-hidden mb-6 bg-muted/30">
+          {/* Image container */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            {/* Replace with actual image when available */}
+            <div className="absolute inset-0 flex items-center justify-center bg-muted/30">
+              <span className="text-foreground/30 text-xl font-light">{project.title}</span>
+            </div>
+            {/* Uncomment when you have images
+            <Image 
+              src={project.image} 
+              alt={project.title}
+              fill
+              className="object-cover project-card-image"
+            />
+            */}
           </div>
+          
+          {/* Colored overlay on hover */}
           <motion.div 
-            className="absolute inset-0 bg-accent/10 mix-blend-overlay"
-            initial={{ opacity: 0 }}
+            className="absolute inset-0 bg-accent/10 mix-blend-overlay project-card-overlay"
             animate={{ opacity: isHovered ? 1 : 0 }}
-            transition={{ duration: 0.4 }}
           />
-          {/* Uncomment when you have images
-          <motion.img 
-            src={project.image} 
-            alt={project.title}
-            className="object-cover w-full h-full"
-            initial={{ scale: 1 }}
-            animate={{ scale: isHovered ? 1.05 : 1 }}
-            transition={{ duration: 0.6 }}
-          />
-          */}
+          
+          {/* Number indicator for project */}
+          <div className="absolute top-4 left-4 text-sm font-mono text-accent">
+            {index < 9 ? `0${index + 1}` : index + 1}
+          </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex justify-between items-center">
-            <h3 className="text-xl font-medium group-hover:text-accent transition-colors">
+            <h3 className="text-2xl font-display group-hover:text-accent transition-colors">
               {project.title}
             </h3>
             <motion.div
-              initial={{ x: 0 }}
-              animate={{ x: isHovered ? 5 : 0 }}
+              initial={{ x: 0, opacity: 0.6 }}
+              animate={{ x: isHovered ? 5 : 0, opacity: isHovered ? 1 : 0.6 }}
               transition={{ duration: 0.3 }}
             >
               <svg 
-                width="20" 
-                height="20" 
+                width="24" 
+                height="24" 
                 viewBox="0 0 24 24" 
                 fill="none" 
                 stroke="currentColor" 

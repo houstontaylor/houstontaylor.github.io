@@ -13,7 +13,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 80);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -33,15 +33,20 @@ export default function Header() {
   ];
 
   return (
-    <header
+    <motion.header
       className={`fixed top-0 w-full z-40 transition-all duration-500 ${
-        scrolled ? 'py-4 bg-background/80 backdrop-blur-md' : 'py-6'
+        scrolled 
+          ? 'py-3 bg-background/90 backdrop-blur-md shadow-sm' 
+          : 'py-4 bg-transparent'
       }`}
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
     >
       <div className="container mx-auto flex items-center justify-between">
         <Link 
           href="/" 
-          className="text-xl font-medium hover:text-accent transition-colors"
+          className="text-lg font-medium hover:text-pink-500 transition-colors"
         >
           Houston Taylor
         </Link>
@@ -49,13 +54,24 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           {navItems.map((item) => (
-            <NavLink 
+            <Link 
               key={item.path}
               href={item.path}
-              active={pathname === item.path}
+              className={`relative text-sm font-medium transition-colors ${
+                pathname === item.path 
+                  ? 'text-pink-500' 
+                  : 'text-foreground hover:text-pink-500'
+              }`}
             >
               {item.name}
-            </NavLink>
+              {pathname === item.path && (
+                <motion.span
+                  layoutId="activeNavIndicator"
+                  className="absolute -bottom-1 left-0 w-full h-0.5 bg-pink-500"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                />
+              )}
+            </Link>
           ))}
           <div className="ml-4">
             <ThemeToggle />
@@ -65,22 +81,22 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden flex flex-col items-center justify-center w-8 h-8 space-y-1.5 z-50"
+          className="md:hidden flex flex-col items-center justify-center w-8 h-8 z-50"
           aria-label="Toggle Menu"
         >
           <motion.span 
             animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            className="block w-6 h-0.5 bg-foreground"
+            className="block w-5 h-0.5 bg-foreground"
             transition={{ duration: 0.3 }}
           />
           <motion.span 
             animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="block w-6 h-0.5 bg-foreground"
+            className="block w-5 h-0.5 mt-1 bg-foreground"
             transition={{ duration: 0.3 }}
           />
           <motion.span 
             animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-            className="block w-6 h-0.5 bg-foreground"
+            className="block w-5 h-0.5 mt-1 bg-foreground"
             transition={{ duration: 0.3 }}
           />
         </button>
@@ -89,71 +105,35 @@ export default function Header() {
         <AnimatePresence>
           {menuOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed inset-0 bg-background z-40 flex flex-col items-center justify-center"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed top-16 left-0 right-0 bg-background z-40 md:hidden border-b border-gray-100 dark:border-gray-800 shadow-lg"
             >
-              <div className="flex flex-col items-center justify-center space-y-8">
-                {navItems.map((item, i) => (
-                  <motion.div
+              <div className="container py-4 flex flex-col space-y-4">
+                {navItems.map((item) => (
+                  <Link
                     key={item.path}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 + 0.2 }}
+                    href={item.path}
+                    className={`py-2 px-4 ${
+                      pathname === item.path 
+                        ? 'text-pink-500 font-medium' 
+                        : 'text-foreground hover:text-pink-500'
+                    }`}
+                    onClick={() => setMenuOpen(false)}
                   >
-                    <Link
-                      href={item.path}
-                      className={`text-2xl font-medium ${
-                        pathname === item.path ? 'text-accent' : 'text-foreground'
-                      } hover:text-accent transition-colors`}
-                    >
-                      {item.name}
-                    </Link>
-                  </motion.div>
+                    {item.name}
+                  </Link>
                 ))}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: navItems.length * 0.1 + 0.2 }}
-                >
+                <div className="px-4 py-2">
                   <ThemeToggle />
-                </motion.div>
+                </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-    </header>
-  );
-}
-
-interface NavLinkProps {
-  href: string;
-  active: boolean;
-  children: React.ReactNode;
-}
-
-function NavLink({ href, active, children }: NavLinkProps) {
-  return (
-    <Link 
-      href={href}
-      className="relative group"
-    >
-      <span className={`${
-        active ? 'text-accent' : 'text-foreground'
-      } hover:text-accent transition-colors`}>
-        {children}
-      </span>
-      {active && (
-        <motion.span
-          layoutId="activeNavIndicator"
-          className="absolute -bottom-1 left-0 w-full h-px bg-accent"
-          transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-        />
-      )}
-      <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full"/>
-    </Link>
+    </motion.header>
   );
 }
