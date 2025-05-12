@@ -1,116 +1,149 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
+import useMousePosition from '@/hooks/useMousePosition';
 
 export default function CustomCursor() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [visible, setVisible] = useState(false);
-  const [clicking, setClicking] = useState(false);
-  const [hovering, setHovering] = useState(false);
-
+  const mousePosition = useMousePosition();
+  const [cursorVariant, setCursorVariant] = useState<'default' | 'link' | 'button'>('default');
+  const [isVisible, setIsVisible] = useState(false);
+  
   useEffect(() => {
-    // Function to handle cursor position
-    const updatePosition = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-    };
-
-    // Function to handle cursor visibility
-    const handleMouseEnter = () => setVisible(true);
-    const handleMouseLeave = () => setVisible(false);
+    // Show cursor only when mouse has moved
+    if (mousePosition.x !== null || mousePosition.y !== null) {
+      setIsVisible(true);
+    }
     
-    // Mouse down/up handlers
-    const handleMouseDown = () => setClicking(true);
-    const handleMouseUp = () => setClicking(false);
+    // Add event listeners for interactive elements
+    const handleMouseEnterLink = () => setCursorVariant('link');
+    const handleMouseLeaveLink = () => setCursorVariant('default');
+    const handleMouseEnterButton = () => setCursorVariant('button');
+    const handleMouseLeaveButton = () => setCursorVariant('default');
     
-    // Interactive elements handler
-    const handleElementHover = () => setHovering(true);
-    const handleElementLeave = () => setHovering(false);
-
+    // Identify all interactive elements
+    const links = document.querySelectorAll('a, .cursor-link');
+    const buttons = document.querySelectorAll('button, .cursor-button');
+    
     // Add event listeners
-    document.addEventListener('mousemove', updatePosition);
-    document.addEventListener('mouseenter', handleMouseEnter);
-    document.addEventListener('mouseleave', handleMouseLeave);
-    document.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mouseup', handleMouseUp);
-    
-    // Add cursor-ready class to body after a delay
-    setTimeout(() => {
-      document.body.classList.add('cursor-ready');
-    }, 500);
-    
-    // Find all interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, input, select, textarea, [role="button"]');
-    
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', handleElementHover);
-      el.addEventListener('mouseleave', handleElementLeave);
+    links.forEach(link => {
+      link.addEventListener('mouseenter', handleMouseEnterLink);
+      link.addEventListener('mouseleave', handleMouseLeaveLink);
     });
-
-    // Clean up event listeners
+    
+    buttons.forEach(button => {
+      button.addEventListener('mouseenter', handleMouseEnterButton);
+      button.addEventListener('mouseleave', handleMouseLeaveButton);
+    });
+    
+    // Cleanup
     return () => {
-      document.removeEventListener('mousemove', updatePosition);
-      document.removeEventListener('mouseenter', handleMouseEnter);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      document.removeEventListener('mousedown', handleMouseDown);
-      document.removeEventListener('mouseup', handleMouseUp);
-      
-      interactiveElements.forEach(el => {
-        el.removeEventListener('mouseenter', handleElementHover);
-        el.removeEventListener('mouseleave', handleElementLeave);
+      links.forEach(link => {
+        link.removeEventListener('mouseenter', handleMouseEnterLink);
+        link.removeEventListener('mouseleave', handleMouseLeaveLink);
       });
       
-      document.body.classList.remove('cursor-ready');
+      buttons.forEach(button => {
+        button.removeEventListener('mouseenter', handleMouseEnterButton);
+        button.removeEventListener('mouseleave', handleMouseLeaveButton);
+      });
+    };
+  }, [mousePosition]);
+  
+  // Hide the default cursor
+  useEffect(() => {
+    document.documentElement.classList.add('custom-cursor-enabled');
+    
+    return () => {
+      document.documentElement.classList.remove('custom-cursor-enabled');
     };
   }, []);
-
-  // Don't render on small screens
+  
+  // Cursor variants for different states with proper TypeScript typing
+  const variants: Variants = {
+    default: {
+      width: 12,
+      height: 12,
+      backgroundColor: 'rgb(var(--accent))',
+      mixBlendMode: 'normal',
+      opacity: 0.5,
+      x: mousePosition.x !== null ? mousePosition.x - 6 : 0,
+      y: mousePosition.y !== null ? mousePosition.y - 6 : 0,
+      transition: {
+        type: 'spring',
+        mass: 0.1,
+        stiffness: 800,
+        damping: 30,
+        duration: 0.1
+      }
+    },
+    link: {
+      width: 24,
+      height: 24,
+      backgroundColor: 'transparent',
+      borderWidth: '2px',
+      borderColor: 'rgb(var(--accent))',
+      borderStyle: 'solid',
+      mixBlendMode: 'normal',
+      opacity: 0.8,
+      x: mousePosition.x !== null ? mousePosition.x - 12 : 0,
+      y: mousePosition.y !== null ? mousePosition.y - 12 : 0,
+      transition: {
+        type: 'spring',
+        mass: 0.3,
+        stiffness: 800,
+        damping: 40,
+        duration: 0.1
+      }
+    },
+    button: {
+      width: 30,
+      height: 30,
+      backgroundColor: 'rgb(var(--secondary-accent))',
+      mixBlendMode: 'difference',
+      opacity: 0.4,
+      x: mousePosition.x !== null ? mousePosition.x - 15 : 0,
+      y: mousePosition.y !== null ? mousePosition.y - 15 : 0,
+      transition: {
+        type: 'spring',
+        mass: 0.3,
+        stiffness: 800,
+        damping: 40,
+        duration: 0.1
+      }
+    }
+  };
+  
+  // Only render on desktop
   if (typeof window !== 'undefined' && window.innerWidth < 768) {
     return null;
   }
-
+  
   return (
-    <div className="custom-cursor">
-      {/* Main cursor circle */}
+    <div>
+      {/* Main cursor */}
       <motion.div
-        className="fixed rounded-full mix-blend-difference pointer-events-none z-[9999]"
-        style={{
-          left: position.x,
-          top: position.y,
-          translateX: "-50%",
-          translateY: "-50%"
-        }}
-        animate={{
-          width: hovering ? 50 : clicking ? 20 : 30,
-          height: hovering ? 50 : clicking ? 20 : 30,
-          border: hovering 
-            ? "1px solid rgba(236, 72, 153, 0.8)" 
-            : "1px solid rgba(255, 255, 255, 0.5)",
-          backgroundColor: hovering 
-            ? "rgba(236, 72, 153, 0.05)"
-            : clicking 
-              ? "rgba(255, 255, 255, 0.2)"
-              : "transparent",
-          opacity: visible ? 1 : 0
-        }}
-        transition={{ duration: 0.15, ease: "easeOut" }}
+        variants={variants}
+        animate={cursorVariant}
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999]"
+        style={{ opacity: isVisible ? 1 : 0 }}
       />
       
       {/* Cursor dot */}
       <motion.div
-        className="fixed rounded-full bg-pink-500 mix-blend-difference pointer-events-none z-[9999]"
-        style={{
-          left: position.x,
-          top: position.y,
-          translateX: "-50%",
-          translateY: "-50%"
-        }}
         animate={{
-          width: hovering ? 8 : clicking ? 0 : 5,
-          height: hovering ? 8 : clicking ? 0 : 5,
-          opacity: clicking ? 0 : (visible ? 1 : 0)
+          x: mousePosition.x !== null ? mousePosition.x - 3 : 0,
+          y: mousePosition.y !== null ? mousePosition.y - 3 : 0,
+          opacity: isVisible ? 1 : 0
         }}
-        transition={{ duration: 0.1 }}
+        transition={{
+          type: 'spring',
+          mass: 0.05,
+          stiffness: 1000,
+          damping: 20,
+          duration: 0.1
+        }}
+        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-[rgb(var(--accent))] pointer-events-none z-[9999]"
       />
     </div>
   );

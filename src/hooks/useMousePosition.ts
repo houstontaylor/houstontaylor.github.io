@@ -8,7 +8,6 @@ interface MousePosition {
 }
 
 export default function useMousePosition(): MousePosition {
-  // Add explicit type annotation here to match the interface
   const [mousePosition, setMousePosition] = useState<MousePosition>({ x: null, y: null });
 
   useEffect(() => {

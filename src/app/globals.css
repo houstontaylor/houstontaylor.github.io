@@ -6,16 +6,16 @@
   --background: 248, 246, 242;
   --foreground: 40, 40, 40;
   --muted: 230, 230, 230;
-  --accent: 236, 72, 153;      /* Pink */
-  --secondary-accent: 74, 222, 128;  /* Green */
+  --accent: 136, 158, 124;      /* Sage Green */
+  --secondary-accent: 214, 144, 82;  /* Accessible Orange - color-blind friendly */
 }
 
 .dark {
-  --background: 20, 20, 20;
+  --background: 28, 32, 30;
   --foreground: 240, 240, 240;
-  --muted: 40, 40, 40;
-  --accent: 236, 72, 153;      /* Pink */
-  --secondary-accent: 74, 222, 128;  /* Green */
+  --muted: 40, 48, 44;
+  --accent: 156, 178, 144;      /* Slightly lighter Sage Green for dark mode */
+  --secondary-accent: 233, 156, 89;  /* Slightly lighter Orange for dark mode */
 }
 
 @layer base {
@@ -104,13 +104,13 @@
     }
   }
 
-  /* Button styles with pink and green accents */
+  /* Button styles with sage green and orange accents */
   .btn {
     display: inline-block;
     padding: 0.75rem 1.75rem;
     font-weight: 500;
     transition: all 0.3s ease;
-    border-radius: 0;
+    border-radius: 0.25rem;
     position: relative;
     overflow: hidden;
     min-width: auto;
@@ -149,11 +149,29 @@
 
   .btn-outline {
     background-color: transparent;
+    border: 1px solid rgba(var(--accent), 0.5);
+    color: rgb(var(--accent));
+  }
+
+  .btn-outline:hover {
+    border-color: rgb(var(--accent));
+    background-color: rgba(var(--accent), 0.05);
+  }
+  
+  /* Secondary button styles with orange accent */
+  .btn-secondary {
+    background-color: rgb(var(--secondary-accent));
+    color: white;
+    border: none;
+  }
+
+  .btn-secondary-outline {
+    background-color: transparent;
     border: 1px solid rgba(var(--secondary-accent), 0.5);
     color: rgb(var(--secondary-accent));
   }
 
-  .btn-outline:hover {
+  .btn-secondary-outline:hover {
     border-color: rgb(var(--secondary-accent));
     background-color: rgba(var(--secondary-accent), 0.05);
   }
@@ -260,7 +278,7 @@ html.lenis {
   max-width: 800px;
 }
 
-/* Project card styling with pink/green accents */
+/* Project card styling with sage/orange accents */
 .project-card {
   position: relative;
   overflow: hidden;
@@ -299,4 +317,55 @@ html.lenis {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
+}
+
+/* New UI Elements */
+.soft-shadow {
+  box-shadow: 0 10px 30px -10px rgba(var(--foreground), 0.1);
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -10px rgba(var(--foreground), 0.1);
+}
+
+.animated-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-border:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: rgb(var(--accent));
+  transition: width 0.5s ease-in-out;
+}
+
+.animated-border:hover:after {
+  width: 100%;
+}
+
+/* Decorative elements */
+.dot-pattern {
+  position: relative;
+}
+
+.dot-pattern:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  background-image: radial-gradient(rgba(var(--accent), 0.2) 1px, transparent 1px);
+  background-size: 10px 10px;
+  z-index: -1;
 }
