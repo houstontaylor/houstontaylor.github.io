@@ -4,6 +4,22 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { allProjects } from '@/data/projectsData';
 
+// Define types for project data
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  slug: string;
+  category?: string;
+}
+
+interface ProjectCardProps {
+  project: Project;
+  index: number;
+}
+
 export default function Projects() {
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -97,7 +113,7 @@ export default function Projects() {
   );
 }
 
-function ProjectCard({ project, index }) {
+function ProjectCard({ project, index }: ProjectCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

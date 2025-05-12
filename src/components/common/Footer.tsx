@@ -29,16 +29,16 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="text-xl font-medium mb-4">Navigation</h3>
             <nav className="flex flex-col space-y-3">
-              <Link href="/" className="text-foreground/70 hover:text-[rgb(var(--accent))] transition-colors w-fit">
+              <Link href="/" className="uppercase text-xs tracking-wider font-mono hover:underline decoration-[rgb(var(--accent))] decoration-2 underline-offset-4">
                 Home
               </Link>
-              <Link href="/projects" className="text-foreground/70 hover:text-[rgb(var(--accent))] transition-colors w-fit">
+              <Link href="/projects" className="uppercase text-xs tracking-wider font-mono hover:underline decoration-[rgb(var(--accent))] decoration-2 underline-offset-4">
                 Projects
               </Link>
-              <Link href="/about" className="text-foreground/70 hover:text-[rgb(var(--accent))] transition-colors w-fit">
+              <Link href="/about" className="uppercase text-xs tracking-wider font-mono hover:underline decoration-[rgb(var(--accent))] decoration-2 underline-offset-4">
                 About
               </Link>
-              <Link href="/contact" className="text-foreground/70 hover:text-[rgb(var(--accent))] transition-colors w-fit">
+              <Link href="/contact" className="uppercase text-xs tracking-wider font-mono hover:underline decoration-[rgb(var(--accent))] decoration-2 underline-offset-4">
                 Contact
               </Link>
             </nav>
@@ -53,7 +53,7 @@ export default function Footer() {
                   href={link.url} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-foreground/70 hover:text-[rgb(var(--accent))] transition-colors w-fit flex items-center group"
+                  className="uppercase text-xs tracking-wider font-mono hover:underline decoration-[rgb(var(--accent))] decoration-2 underline-offset-4 flex items-center group"
                 >
                   <span>{link.name}</span>
                   <svg 

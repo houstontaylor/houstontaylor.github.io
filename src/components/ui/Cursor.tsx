@@ -11,7 +11,7 @@ export default function CustomCursor() {
 
   useEffect(() => {
     // Function to handle cursor position
-    const updatePosition = (e) => {
+    const updatePosition = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
     };
 

@@ -1,74 +1,63 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { useState } from 'react';
-import { allProjects } from '@/data/projectsData';
-import ProjectCard from '@/components/projects/ProjectCard';
 
-export default function Projects() {
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { 
-        duration: 0.8, 
-        ease: [0.22, 1, 0.36, 1] 
-      }
+export default function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // After mounting, we can access the theme
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Handle theme toggle with proper type safety
+  const toggleTheme = () => {
+    if (theme === 'dark') {
+      setTheme('light');
+    } else {
+      setTheme('dark');
     }
   };
 
+  // Don't render anything until mounted to avoid hydration mismatch
+  if (!mounted) {
+    return null;
+  }
+
   return (
-    <section className="py-28 md:py-40 bg-muted/10">
-      <div className="container mx-auto">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.2
-              }
-            }
-          }}
-          className="max-w-5xl mx-auto text-center mb-20"
+    <motion.button
+      onClick={toggleTheme}
+      className="w-10 h-10 rounded-full flex items-center justify-center bg-muted/20 hover:bg-muted/50 transition-colors"
+      whileTap={{ scale: 0.9 }}
+      aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+    >
+      {theme === 'dark' ? (
+        <svg 
+          width="18" 
+          height="18" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2" 
         >
-          <motion.span variants={fadeInUp} className="text-accent text-sm tracking-widest uppercase mb-4 block font-mono">Portfolio</motion.span>
-          <motion.h2 variants={fadeInUp} className="text-4xl md:text-6xl font-display mb-6 tracking-tight">Selected Projects</motion.h2>
-          <motion.p variants={fadeInUp} className="text-xl text-foreground/70 max-w-2xl mx-auto">
-            A collection of my recent work in UI/UX design and frontend development.
-          </motion.p>
-        </motion.div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
-          {allProjects.slice(0, 4).map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={index}
-            />
-          ))}
-        </div>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mt-20"
+          <circle cx="12" cy="12" r="5" />
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+        </svg>
+      ) : (
+        <svg 
+          width="18" 
+          height="18" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2" 
         >
-          <Link 
-            href="/projects"
-            className="btn-outline text-lg px-8 py-4"
-          >
-            View All Projects
-          </Link>
-        </motion.div>
-      </div>
-    </section>
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      )}
+    </motion.button>
   );
 }

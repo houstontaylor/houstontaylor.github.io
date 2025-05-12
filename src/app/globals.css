@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: 250, 250, 250;
+  --background: 248, 246, 242;
   --foreground: 40, 40, 40;
   --muted: 230, 230, 230;
   --accent: 236, 72, 153;      /* Pink */
@@ -35,6 +35,7 @@
     font-feature-settings: "rlig" 1, "calt" 1;
     overflow-x: hidden;
     transition: background-color 0.5s ease, color 0.5s ease;
+    letter-spacing: 0.02em;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -229,20 +230,21 @@ html.lenis {
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Hover effects */
+/* hover underline only on hover */
 .hover-link {
   position: relative;
+  display: inline-block;
 }
 
 .hover-link::after {
   content: '';
   position: absolute;
+  left: 0;
+  bottom: -2px;
   width: 0;
   height: 1px;
-  bottom: -2px;
-  left: 0;
   background-color: rgb(var(--accent));
-  transition: width 0.3s ease;
+  transition: width 0.4s ease;
 }
 
 .hover-link:hover::after {

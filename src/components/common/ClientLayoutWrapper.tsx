@@ -8,7 +8,11 @@ import Footer from '@/components/common/Footer';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 
-export default function ClientLayoutWrapper({ children }: { children: React.ReactNode }) {
+interface ClientLayoutWrapperProps {
+  children: React.ReactNode;
+}
+
+export default function ClientLayoutWrapper({ children }: ClientLayoutWrapperProps) {
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
