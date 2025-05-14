@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 import ProjectCard from './ProjectCard';
 import { allProjects } from '@/data/projectsData';
 
@@ -23,10 +24,10 @@ export default function ProjectsList() {
           <motion.button
             key={category}
             onClick={() => setFilter(category)}
-            className={`px-6 py-3 text-sm font-mono transition-all duration-300 ${
+            className={`px-6 py-3 text-sm font-mono transition-all duration-300 rounded-lg ${
               filter === category 
-                ? 'bg-accent text-white' 
-                : 'bg-transparent border border-muted/50 text-foreground/70 hover:border-accent hover:text-accent'
+                ? 'bg-[rgb(var(--accent))] text-white shadow-md' 
+                : 'bg-[rgb(var(--foreground))]/5 hover:bg-[rgb(var(--foreground))]/10 text-[rgb(var(--foreground))]/80'
             }`}
             whileHover={{ y: -3 }}
             whileTap={{ scale: 0.98 }}
@@ -62,10 +63,10 @@ export default function ProjectsList() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-center py-24"
+          className="text-center py-24 bg-[rgb(var(--foreground))]/5 rounded-lg"
         >
           <h3 className="text-2xl font-display mb-4">No projects found</h3>
-          <p className="text-foreground/70 text-lg">Try selecting a different category</p>
+          <p className="text-[rgb(var(--foreground))]/70 text-lg">Try selecting a different category</p>
         </motion.div>
       )}
     </div>

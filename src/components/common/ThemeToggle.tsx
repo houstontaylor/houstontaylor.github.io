@@ -30,7 +30,7 @@ export default function ThemeToggle() {
   return (
     <motion.button
       onClick={toggleTheme}
-      className="w-12 h-12 rounded-full flex items-center justify-center bg-[rgba(var(--accent),0.1)] hover:bg-[rgba(var(--accent),0.15)] transition-colors relative group overflow-hidden"
+      className="w-10 h-10 rounded-lg flex items-center justify-center bg-[rgba(var(--accent),0.1)] hover:bg-[rgba(var(--accent),0.15)] transition-colors relative overflow-hidden"
       whileTap={{ scale: 0.9 }}
       aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
     >
@@ -45,12 +45,12 @@ export default function ThemeToggle() {
         initial={{ rotate: 0 }}
         animate={{ rotate: theme === 'dark' ? 180 : 0 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="w-full h-full relative flex items-center justify-center"
+        className="relative flex items-center justify-center"
       >
         {theme === 'dark' ? (
           <svg 
-            width="20" 
-            height="20" 
+            width="18" 
+            height="18" 
             viewBox="0 0 24 24" 
             fill="none" 
             stroke="currentColor" 
@@ -62,8 +62,8 @@ export default function ThemeToggle() {
           </svg>
         ) : (
           <svg 
-            width="20" 
-            height="20" 
+            width="18" 
+            height="18" 
             viewBox="0 0 24 24" 
             fill="none" 
             stroke="currentColor" 
