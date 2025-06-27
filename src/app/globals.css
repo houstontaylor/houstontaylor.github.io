@@ -369,3 +369,12 @@ html.lenis {
   background-size: 10px 10px;
   z-index: -1;
 }
+
+.menu-button {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.menu-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(var(--accent), 0.2);
+}
