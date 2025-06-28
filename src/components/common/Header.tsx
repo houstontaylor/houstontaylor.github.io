@@ -12,18 +12,37 @@ export default function Header () {
   const pathname = usePathname()
 
   useEffect(() => {
-    const controlNavbar = () => {
-      if (window.scrollY > lastScrollY) {
-        setShow(false)
-      } else {
-        setShow(true)
+    const controlNavbar = (event: any) => {
+      // Get scroll position from custom Lenis event or fallback to window.scrollY
+      const currentScrollY = event.detail?.scrollY || window.scrollY;
+      
+      console.log('Scroll detected:', currentScrollY, 'Last:', lastScrollY, 'Show:', show);
+      
+      // Only start hiding header after scrolling past 100px
+      if (currentScrollY < 100) {
+        setShow(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down past threshold
+        setShow(false);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up
+        setShow(true);
       }
-      setLastScrollY(window.scrollY)
+      
+      setLastScrollY(currentScrollY);
     }
 
-    window.addEventListener('scroll', controlNavbar)
-    return () => window.removeEventListener('scroll', controlNavbar)
-  }, [lastScrollY])
+    // Listen for custom Lenis scroll events
+    window.addEventListener('lenisScroll', controlNavbar);
+    
+    // Also listen for regular scroll events as fallback
+    window.addEventListener('scroll', () => controlNavbar({ detail: { scrollY: window.scrollY } }), { passive: true });
+
+    return () => {
+      window.removeEventListener('lenisScroll', controlNavbar);
+      window.removeEventListener('scroll', () => controlNavbar({ detail: { scrollY: window.scrollY } }));
+    }
+  }, [])
 
   const navItems = [
     { name: 'WORK', path: '/projects' },
@@ -34,18 +53,18 @@ export default function Header () {
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: -10 }}
+      animate={{ opacity: 1, y: 0 }} // Changed from y: -10 to y: 0
       transition={{ duration: 0.5 }}
       className={`fixed top-0 w-full z-50 transition-transform duration-300 ${
         show ? 'translate-y-0' : '-translate-y-full'
       } bg-[rgb(var(--background))] dark:bg-[rgb(var(--background))] shadow-md`}
     >
-      <div className='container flex items-center justify-between px-6 py-8 min-h-[6rem]'>
+      <div className='container flex items-center justify-between px-6 py-4 min-h-[5rem]'> {/* Reduced padding from py-8 to py-4 and height from 6rem to 5rem */}
 
         {/* Left: logo + sun toggle */}
         <div className='flex items-center space-x-4'>
           <Link href='/' className='flex items-center'>
-            <div className='w-16 h-16 relative overflow-hidden y-20'>
+            <div className='w-16 h-16 relative overflow-hidden'>
               <img
                 src='/logo.png'
                 alt='Logo'

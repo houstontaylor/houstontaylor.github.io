@@ -54,7 +54,7 @@ export default function Hero() {
   const mouseMovement = calcMouseMove(0.02);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center px-6 pt-28 md:pt-40 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-center items-center px-6 pt-2 md:pt-2 overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
         {/* Dots pattern top right */}

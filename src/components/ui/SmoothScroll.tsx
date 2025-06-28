@@ -32,6 +32,13 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     function raf(time: number) {
       if (lenisRef.current) {
         lenisRef.current.raf(time);
+        
+        // Emit custom scroll event with current scroll position
+        // This allows other components to listen for scroll changes
+        const scrollY = window.scrollY || window.pageYOffset;
+        window.dispatchEvent(new CustomEvent('lenisScroll', { 
+          detail: { scrollY } 
+        }));
       }
       requestAnimationFrame(raf);
     }
