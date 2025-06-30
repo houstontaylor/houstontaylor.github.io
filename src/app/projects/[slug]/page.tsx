@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { allProjects } from '@/data/projectsData'; // Adjust the import path as necessary
+import { allProjects } from '@/data/projectsData'; 
 
 interface ProjectPageProps {
   params: {

@@ -84,7 +84,7 @@ export default function AboutPage() {
                 transition={{ delay: 0.4, duration: 0.8 }}
                 className="text-4xl md:text-6xl font-display font-bold mb-6 leading-tight"
               >
-                I'm <span className="text-[rgb(var(--accent))]">Your Name</span>
+                I'm <span className="text-[rgb(var(--accent))]">Houston Taylor</span>
               </motion.h1>
               
               <motion.p 
@@ -128,7 +128,7 @@ export default function AboutPage() {
                     Your Photo Here
                   </div>
                   {/* You can replace the div above with: */}
-                  {/* <Image src="/path-to-your-photo.jpg" alt="Your Name" fill className="object-cover" /> */}
+                  {/* <Image src="/path-to-your-photo.jpg" alt="Houston" fill className="object-cover" /> */}
                 </div>
                 {/* Floating elements */}
                 <motion.div 

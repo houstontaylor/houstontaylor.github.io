@@ -310,15 +310,6 @@ html.lenis {
   opacity: 1;
 }
 
-/* Text gradient for special elements */
-.text-gradient {
-  background: linear-gradient(90deg, rgb(var(--accent)), rgb(var(--secondary-accent)));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-}
-
 /* New UI Elements */
 .soft-shadow {
   box-shadow: 0 10px 30px -10px rgba(var(--foreground), 0.1);

@@ -126,7 +126,7 @@ export default function ClientLayoutWrapper({ children }: ClientLayoutWrapperPro
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="min-h-screen pt-16"
+            className="min-h-screen pt-8"
           >
             {children}
           </motion.main>
