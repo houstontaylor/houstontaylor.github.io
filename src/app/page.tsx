@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 export default function Home() {
   return (
     <>
-      <main>
+      <main className="-mt-16">
         <Hero />
         
         {/* Projects section */}
