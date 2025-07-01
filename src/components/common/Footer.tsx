@@ -16,7 +16,7 @@ export default function Footer() {
   const socialLinks = [
     { 
       name: 'LinkedIn', 
-      url: 'https://linkedin.com/in/yourusername',
+      url: 'https://www.linkedin.com/in/houston-taylor/',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
@@ -27,19 +27,10 @@ export default function Footer() {
     },
     { 
       name: 'GitHub', 
-      url: 'https://github.com/yourusername',
+      url: 'https://github.com/houstontaylor',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-        </svg>
-      )
-    },
-    { 
-      name: 'Twitter', 
-      url: 'https://twitter.com/yourusername',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M22 4c-1.16.52-2.42.87-3.72 1.02A6.452 6.452 0 0 0 21.5 1.89a12.76 12.76 0 0 1-4.06 1.56 6.38 6.38 0 0 0-10.93 4.38v1.43C2.4 9.05 1 4 1 4s-6 5.8 4 12c-2.13 1.42-4.65 2.16-7 2 8 4.42 18 0 18-10.29 0-.24-.03-.5-.05-.73A9.03 9.03 0 0 0 22 4Z"></path>
         </svg>
       )
     }
@@ -162,7 +153,7 @@ export default function Footer() {
                 strokeWidth="2" 
                 strokeLinecap="round" 
                 strokeLinejoin="round" 
-                className="ml-2 transform rotate-90 group-hover:-translate-y-1 transition-transform"
+                className="ml-2 transform -rotate-90 group-hover:-translate-y-1 transition-transform"
                 aria-hidden="true"
               >
                 <path d="M5 12h14M12 5l7 7-7 7"/>

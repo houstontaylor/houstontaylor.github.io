@@ -215,14 +215,14 @@ export default function Hero() {
       
       {/* Scroll indicator */}
       <motion.div 
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+        className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 0.8 }}
       >
         <button
           onClick={scrollToNextSection}
-          className="flex flex-col items-center group cursor-pointer bg-transparent border-none focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent))] focus:ring-offset-2 rounded-lg p-2"
+          className="flex flex-col items-center group cursor-pointer bg-transparent border-none outline-none focus:outline-none rounded-lg p-2"
           aria-label="Scroll down to explore more content"
         >
           <span className="text-[rgb(var(--foreground))/40 text-sm font-mono mb-2 group-hover:text-[rgb(var(--accent))] transition-colors duration-300">
