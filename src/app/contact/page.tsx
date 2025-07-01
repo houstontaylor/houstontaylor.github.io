@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useState, useRef } from 'react';
 
 export default function ContactPage() {
   const [formState, setFormState] = useState({
@@ -13,6 +13,21 @@ export default function ContactPage() {
   const [focused, setFocused] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
+  
+  // Scroll animation for paper airplane
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"]
+  });
+  const trailDraw = useTransform(scrollYProgress, [0, 1], [600, 0]);
+  
+  // Transform scroll progress to movement values with curved path
+  const airplaneX = useTransform(scrollYProgress, [0, 1], [-400, 1400]);
+  // Create a sine wave for loopy Y movement
+  const airplaneY = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [500, 400, 450, 380, 420]);
+  const airplaneRotate = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [0, -5, 5, -3, 2]);
+  const trailLength = useTransform(scrollYProgress, [0, 0.2, 1], [0, 200, 600]);
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,25 +49,30 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen pt-20 pb-16">
-      <div className="container mx-auto px-4">
+    <div ref={containerRef} className="min-h-screen pt-20 pb-16 relative overflow-hidden">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-2xl mx-auto">
           
-          {/* Simple header */}
+          {/* Header with rounded background */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <motion.div
+            <motion.div 
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="inline-flex items-center bg-[rgb(var(--accent))]/10 px-4 py-2 rounded-full text-[rgb(var(--accent))] mb-8 font-mono text-sm"
+              className="flex items-center justify-center mb-8"
             >
-              <span className="inline-block w-2 h-2 rounded-full bg-[rgb(var(--secondary-accent))] mr-2"></span>
-              Get In Touch
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-px bg-[rgb(var(--accent))]"></div>
+                <span className="text-[rgb(var(--accent))] font-mono text-sm tracking-[0.2em] uppercase">
+                  Get In Touch
+                </span>
+                <div className="w-12 h-px bg-[rgb(var(--accent))]"></div>
+              </div>
             </motion.div>
             
             <motion.h1
@@ -81,7 +101,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
-            className="bg-[rgb(var(--background))] border border-[rgb(var(--foreground))]/10 rounded-2xl p-8 shadow-lg"
+            className="bg-[rgb(var(--background))] border border-[rgb(var(--foreground))]/10 rounded-2xl p-8 shadow-lg relative"
           >
             {submitted ? (
               <motion.div 
@@ -206,42 +226,6 @@ export default function ContactPage() {
                 </button>
               </form>
             )}
-          </motion.div>
-
-          {/* Simple social links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.8 }}
-            className="mt-12 text-center"
-          >
-            <p className="text-sm text-[rgb(var(--foreground))]/50 mb-4">
-              Or connect with me on
-            </p>
-            <div className="flex justify-center space-x-6">
-              <a 
-                href="https://github.com/yourusername"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full bg-[rgb(var(--foreground))]/5 hover:bg-[rgb(var(--accent))] text-[rgb(var(--foreground))]/60 hover:text-white transition-all duration-300 flex items-center justify-center group"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                </svg>
-              </a>
-              <a 
-                href="https://linkedin.com/in/yourprofile"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full bg-[rgb(var(--foreground))]/5 hover:bg-[rgb(var(--secondary-accent))] text-[rgb(var(--foreground))]/60 hover:text-white transition-all duration-300 flex items-center justify-center group"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                  <rect x="2" y="9" width="4" height="12"></rect>
-                  <circle cx="4" cy="4" r="2"></circle>
-                </svg>
-              </a>
-            </div>
           </motion.div>
         </div>
       </div>

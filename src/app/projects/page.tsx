@@ -7,14 +7,37 @@ export default function ProjectsPage() {
   return (
     <>
       {/* Magazine-style Header */}
-      <section className="relative pt-24 pb-16 overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[rgb(var(--background))] via-[rgb(var(--accent))]/3 to-[rgb(var(--secondary-accent))]/3"></div>
-        <div className="absolute top-20 right-20 w-32 h-32 bg-[rgb(var(--accent))]/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-20 w-24 h-24 bg-[rgb(var(--secondary-accent))]/5 rounded-full blur-2xl"></div>
+      <section className="relative pt-32 pb-24 overflow-hidden">
+        {/* Background Elements - Fixed with inline styles */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to bottom right, rgb(var(--background)), rgba(var(--accent), 0.03), rgba(var(--secondary-accent), 0.03))'
+          }}
+        />
+        <div 
+          className="absolute top-20 right-20 w-32 h-32 rounded-full blur-3xl"
+          style={{
+            backgroundColor: 'rgb(var(--accent))',
+            opacity: 0.8
+          }}
+        />
+        <div 
+          className="absolute bottom-20 left-20 w-24 h-24 rounded-full blur-2xl"
+          style={{
+            backgroundColor: 'rgb(var(--secondary-accent))',
+            opacity: 0.5
+          }}
+        />
         
-        {/* Decorative grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--foreground),0.02)_1px,transparent_1px),linear-gradient(to_right,rgba(var(--foreground),0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-50"></div>
+        {/* Decorative grid pattern - Fixed with inline styles */}
+        <div 
+          className="absolute inset-0 opacity-50"
+          style={{
+            backgroundImage: `linear-gradient(rgba(var(--foreground), 0.02) 1px, transparent 1px), linear-gradient(to right, rgba(var(--foreground), 0.02) 1px, transparent 1px)`,
+            backgroundSize: '40px 40px'
+          }}
+        />
 
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
@@ -31,11 +54,17 @@ export default function ProjectsPage() {
               className="flex items-center justify-center mb-8"
             >
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-px bg-[rgb(var(--accent))]"></div>
+                <div 
+                  className="w-12 h-px"
+                  style={{ backgroundColor: 'rgb(var(--accent))' }}
+                />
                 <span className="text-[rgb(var(--accent))] font-mono text-sm tracking-[0.2em] uppercase">
                   Portfolio 2025
                 </span>
-                <div className="w-12 h-px bg-[rgb(var(--accent))]"></div>
+                <div 
+                  className="w-12 h-px"
+                  style={{ backgroundColor: 'rgb(var(--accent))' }}
+                />
               </div>
             </motion.div>
             
@@ -55,7 +84,8 @@ export default function ProjectsPage() {
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ delay: 1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute -bottom-2 left-0 w-full h-1 bg-[rgb(var(--secondary-accent))] origin-left"
+                    className="absolute -bottom-2 left-0 w-full h-1 origin-left"
+                    style={{ backgroundColor: 'rgb(var(--secondary-accent))' }}
                   />
                 </span>
               </h1>

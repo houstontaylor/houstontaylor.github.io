@@ -59,7 +59,7 @@ export default function Hero() {
       <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
         {/* Dots pattern top right */}
         <motion.div 
-          className="absolute top-[10%] right-[15%] w-64 h-64 opacity-30"
+          className="absolute top-[10%] right-[15%] w-64 h-64 opacity-50"
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.3 }}
           transition={{ duration: 1.5 }}
@@ -72,7 +72,7 @@ export default function Hero() {
         
         {/* Sage green blob */}
         <motion.div 
-          className="absolute w-96 h-96 rounded-full filter blur-[80px] bg-[rgb(var(--accent))] opacity-10 top-0 left-[20%]"
+          className="absolute w-96 h-96 rounded-full filter blur-[80px] bg-[rgb(var(--accent))] opacity-30 top-0 left-[10%]"
           animate={{ 
             y: [0, 20, 0], 
             x: [0, -10, 0],
@@ -89,7 +89,7 @@ export default function Hero() {
         
         {/* Secondary accent blob */}
         <motion.div 
-          className="absolute w-80 h-80 rounded-full filter blur-[80px] bg-[rgb(var(--secondary-accent))] opacity-10 bottom-[10%] right-[10%]"
+          className="absolute w-80 h-80 rounded-full filter blur-[80px] bg-[rgb(var(--secondary-accent))] opacity-35 bottom-[10%] right-[10%]"
           animate={{ 
             y: [0, -20, 0], 
             x: [0, 10, 0],
@@ -106,7 +106,7 @@ export default function Hero() {
         />
         
         {/* Subtle grid lines */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--foreground),0.015)_1px,transparent_1px),linear-gradient(to_right,rgba(var(--foreground),0.015)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--foreground),0.02)_1px,transparent_1px),linear-gradient(to_right,rgba(var(--foreground),0.02)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
       </div>
       
       {/* Main content */}
