@@ -53,10 +53,22 @@ export default function Hero() {
 
   const mouseMovement = calcMouseMove(0.02);
 
+  // Function to scroll to next section
+  const scrollToNextSection = () => {
+    const nextSection = document.querySelector('section:nth-of-type(2)');
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center px-6 pt-2 md:pt-2 overflow-hidden">
+    <section 
+      className="relative min-h-screen flex flex-col justify-center items-center px-6 pt-2 md:pt-16 overflow-hidden"
+      role="banner"
+      aria-labelledby="hero-heading"
+    >
       {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none" aria-hidden="true">
         {/* Dots pattern top right */}
         <motion.div 
           className="absolute top-[10%] right-[15%] w-64 h-64 opacity-50"
@@ -117,12 +129,18 @@ export default function Hero() {
           variants={staggerChildren}
           className="text-center space-y-8"
         >
-          <motion.div variants={fadeInUp} className="inline-flex items-center bg-[rgba(var(--accent),0.1)] px-4 py-2 rounded-full text-[rgb(var(--accent))] mb-6 font-mono text-sm">
-            <span className="inline-block w-2 h-2 rounded-full bg-[rgb(var(--accent))] mr-2"></span>
+          <motion.div 
+            variants={fadeInUp} 
+            className="inline-flex items-center bg-[rgba(var(--accent),0.1)] px-4 py-2 rounded-full text-[rgb(var(--accent))] mb-6 font-mono text-sm"
+            role="img"
+            aria-label="Currently studying at Stanford University"
+          >
+            <span className="inline-block w-2 h-2 rounded-full bg-[rgb(var(--accent))] mr-2" aria-hidden="true"></span>
             Stanford University
           </motion.div>
 
           <motion.h1
+            id="hero-heading"
             variants={fadeInUp}
             className="font-display text-5xl md:text-7xl lg:text-8xl leading-tight max-w-5xl mx-auto relative"
           >
@@ -133,6 +151,7 @@ export default function Hero() {
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1, delay: 1 }}
+                aria-hidden="true"
               />
             </span>{" "}
             <span className="text-[rgb(var(--foreground))]">&</span>{" "}
@@ -143,6 +162,7 @@ export default function Hero() {
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1, delay: 1.3 }}
+                aria-hidden="true"
               />
             </span>
           </motion.h1>
@@ -161,30 +181,32 @@ export default function Hero() {
             <Link 
               href="/projects" 
               className="group relative overflow-hidden"
+              aria-label="View my portfolio projects"
             >
               <span className="relative z-10 px-8 py-3 block bg-[rgb(var(--accent))] text-white rounded-lg font-medium transition-all duration-300 group-hover:bg-[rgb(var(--accent))] group-hover:shadow-lg">
                 <span className="flex items-center">
                   View My Work
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
                 </span>
-                <span className="absolute inset-0 bg-white/20 w-0 transition-all duration-300 group-hover:w-full z-0"></span>
+                <span className="absolute inset-0 bg-white/20 w-0 transition-all duration-300 group-hover:w-full z-0" aria-hidden="true"></span>
               </span>
             </Link>
 
             <Link 
               href="/contact" 
               className="group relative overflow-hidden"
+              aria-label="Contact Houston Taylor to discuss projects"
             >
               <span className="relative z-10 px-8 py-3 block border-2 border-[rgb(var(--secondary-accent))] text-[rgb(var(--secondary-accent))] rounded-lg font-medium transition-all duration-300 hover:shadow-lg">
                 <span className="flex items-center group-hover:text-white transition-colors duration-300">
                   Get In Touch
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </span>
-                <span className="absolute inset-0 bg-[rgb(var(--secondary-accent))] w-0 transition-all duration-300 group-hover:w-full z-0"></span>
+                <span className="absolute inset-0 bg-[rgb(var(--secondary-accent))] w-0 transition-all duration-300 group-hover:w-full z-0" aria-hidden="true"></span>
               </span>
             </Link>
           </motion.div>
@@ -198,25 +220,34 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 0.8 }}
       >
-        <span className="text-[rgb(var(--foreground))/40 text-sm font-mono mb-2">Scroll to explore</span>
-        <motion.div 
-          className="w-6 h-10 border-2 border-[rgb(var(--accent))/30 rounded-full flex justify-center"
-          initial={{ opacity: 0.5 }}
-          animate={{ opacity: [0.3, 0.7, 0.3] }}
-          transition={{ duration: 2, repeat: Infinity }}
+        <button
+          onClick={scrollToNextSection}
+          className="flex flex-col items-center group cursor-pointer bg-transparent border-none focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent))] focus:ring-offset-2 rounded-lg p-2"
+          aria-label="Scroll down to explore more content"
         >
+          <span className="text-[rgb(var(--foreground))/40 text-sm font-mono mb-2 group-hover:text-[rgb(var(--accent))] transition-colors duration-300">
+            Scroll to explore
+          </span>
           <motion.div 
-            className="w-1.5 h-1.5 bg-[rgb(var(--accent))] rounded-full"
-            animate={{ 
-              y: [2, 15, 2] 
-            }}
-            transition={{ 
-              duration: 2,
-              repeat: Infinity,
-              repeatType: 'loop'
-            }}
-          />
-        </motion.div>
+            className="w-6 h-10 border-2 border-[rgb(var(--accent))/30 rounded-full flex justify-center group-hover:border-[rgb(var(--accent))]/60 transition-colors duration-300"
+            initial={{ opacity: 0.5 }}
+            animate={{ opacity: [0.3, 0.7, 0.3] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            aria-hidden="true"
+          >
+            <motion.div 
+              className="w-1.5 h-1.5 bg-[rgb(var(--accent))] rounded-full"
+              animate={{ 
+                y: [2, 15, 2] 
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                repeatType: 'loop'
+              }}
+            />
+          </motion.div>
+        </button>
       </motion.div>
     </section>
   );

@@ -18,7 +18,7 @@ export default function Header () {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      if (currentScrollY < 100) {
+      if (currentScrollY < 50) {
         setShow(true);
       } else if (currentScrollY > lastScrollY) {
         setShow(false);
@@ -61,7 +61,7 @@ export default function Header () {
 
   return (
     <>
-      {/* Cute Loading Overlay - lower z-index than header */}
+      {/* Loading Overlay */}
       {isNavigating && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -69,6 +69,9 @@ export default function Header () {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
           className="fixed inset-0 z-40 bg-[rgb(var(--background))]/90 backdrop-blur-sm flex items-center justify-center"
+          role="status"
+          aria-live="polite"
+          aria-label="Page is loading"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -76,7 +79,7 @@ export default function Header () {
             transition={{ delay: 0.1, duration: 0.3 }}
             className="flex flex-col items-center"
           >
-            <div className="relative w-12 h-12 mb-4">
+            <div className="relative w-12 h-12 mb-4" aria-hidden="true">
               <motion.div 
                 className="absolute inset-0 rounded-full border-2 border-[rgb(var(--accent))]"
                 animate={{ 
@@ -127,16 +130,21 @@ export default function Header () {
         style={{
           transform: show ? 'translateY(0)' : 'translateY(-100%)'
         }}
+        role="banner"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
             {/* Logo */}
-            <Link href="/" className="text-2xl font-display font-bold text-[rgb(var(--foreground))] hover:text-[rgb(var(--accent))] transition-colors">
+            <Link 
+              href="/" 
+              className="text-2xl font-display font-bold text-[rgb(var(--foreground))] hover:text-[rgb(var(--accent))] transition-colors"
+              aria-label="Houston Taylor - Return to homepage"
+            >
               HT
             </Link>
 
             {/* Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
               {navItems.map((item) => (
                 <button
                   key={item.name}
@@ -146,13 +154,18 @@ export default function Header () {
                       ? 'text-[rgb(var(--accent))]' 
                       : 'text-[rgb(var(--foreground))]/70'
                   }`}
+                  aria-current={pathname === item.path ? 'page' : undefined}
+                  aria-label={`Navigate to ${item.name.toLowerCase()} page${pathname === item.path ? ' (current page)' : ''}`}
                 >
                   {item.name}
                   
                   {/* Active indicator */}
-                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-[rgb(var(--accent))] transition-all duration-300 ${
-                    pathname === item.path ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`} />
+                  <span 
+                    className={`absolute -bottom-1 left-0 h-0.5 bg-[rgb(var(--accent))] transition-all duration-300 ${
+                      pathname === item.path ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}
+                    aria-hidden="true"
+                  />
                 </button>
               ))}
             </nav>

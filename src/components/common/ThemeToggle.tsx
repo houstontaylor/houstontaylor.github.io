@@ -33,12 +33,15 @@ export default function ThemeToggle() {
       className="w-10 h-10 rounded-lg flex items-center justify-center bg-[rgba(var(--accent),0.1)] hover:bg-[rgba(var(--accent),0.15)] transition-colors relative overflow-hidden"
       whileTap={{ scale: 0.9 }}
       aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-pressed={theme === 'dark'}
+      role="switch"
     >
       <motion.div 
         className="absolute inset-0 bg-[rgb(var(--accent))]"
         initial={{ scale: 0, opacity: 0 }}
         whileHover={{ scale: 1, opacity: 0.1 }}
         transition={{ duration: 0.3 }}
+        aria-hidden="true"
       />
       
       <motion.div
@@ -56,6 +59,7 @@ export default function ThemeToggle() {
             stroke="currentColor" 
             strokeWidth="2" 
             className="text-[rgb(var(--accent))]"
+            aria-hidden="true"
           >
             <circle cx="12" cy="12" r="5" />
             <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
@@ -69,11 +73,17 @@ export default function ThemeToggle() {
             stroke="currentColor" 
             strokeWidth="2" 
             className="text-[rgb(var(--accent))]"
+            aria-hidden="true"
           >
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
           </svg>
         )}
       </motion.div>
+      
+      {/* Screen reader only text for current state */}
+      <span className="sr-only">
+        Currently {theme === 'dark' ? 'dark' : 'light'} mode
+      </span>
     </motion.button>
   );
 }

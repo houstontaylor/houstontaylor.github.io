@@ -20,7 +20,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
   return (
-    <motion.div
+    <motion.article
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ 
@@ -29,16 +29,27 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         ease: [0.22, 1, 0.36, 1]
       }}
       className="group"
+      role="listitem"
     >
-      <Link href={`/projects/${project.slug}`} className="block">
+      <Link 
+        href={`/projects/${project.slug}`} 
+        className="block"
+        aria-label={`View details for ${project.title} project`}
+      >
         <div className="relative overflow-hidden rounded-xl bg-[rgb(var(--foreground))]/5 h-64 mb-6 group-hover:shadow-xl transition-all duration-500">
           {/* Project image/placeholder */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-[rgb(var(--foreground))]/30 font-display text-xl">{project.title}</span>
+            <span className="text-[rgb(var(--foreground))]/30 font-display text-xl" aria-hidden="true">
+              {project.title}
+            </span>
           </div>
           
           {/* Category badge */}
-          <div className="absolute top-4 left-4 bg-white dark:bg-[rgb(var(--background))] px-3 py-1 text-xs font-mono rounded-full shadow-sm z-10">
+          <div 
+            className="absolute top-4 left-4 bg-white dark:bg-[rgb(var(--background))] px-3 py-1 text-xs font-mono rounded-full shadow-sm z-10"
+            role="img"
+            aria-label={`Project category: ${project.category || 'Project'}`}
+          >
             {project.category || 'Project'}
           </div>
           
@@ -48,10 +59,14 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             initial={{ opacity: 0 }}
             whileHover={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
+            aria-hidden="true"
           />
           
           {/* Project number */}
-          <div className="absolute top-4 right-4 text-3xl font-display font-light text-[rgb(var(--foreground))]/10 group-hover:text-white/50 transition-colors duration-300">
+          <div 
+            className="absolute top-4 right-4 text-3xl font-display font-light text-[rgb(var(--foreground))]/10 group-hover:text-white/50 transition-colors duration-300"
+            aria-label={`Project ${index + 1} of ${index + 1}`}
+          >
             {(index + 1).toString().padStart(2, '0')}
           </div>
           
@@ -60,6 +75,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             initial={{ y: 20 }}
             whileHover={{ y: 0 }}
+            aria-hidden="true"
           >
             <span className="px-6 py-2 bg-white text-[rgb(var(--accent))] rounded-lg font-medium text-sm shadow-lg">
               View Project →
@@ -76,11 +92,16 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             {project.description}
           </p>
           
-          <div className="flex flex-wrap gap-2 pt-2">
+          <div 
+            className="flex flex-wrap gap-2 pt-2"
+            role="list"
+            aria-label={`Technologies used: ${project.tags.join(', ')}`}
+          >
             {project.tags.map((tag) => (
               <span 
                 key={tag} 
                 className="px-3 py-1 text-xs bg-[rgb(var(--accent))]/10 text-[rgb(var(--accent))] rounded-full font-medium"
+                role="listitem"
               >
                 {tag}
               </span>
@@ -88,6 +109,6 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           </div>
         </div>
       </Link>
-    </motion.div>
+    </motion.article>
   );
 }

@@ -1,19 +1,20 @@
 'use client';
 
-import ProjectsList from '@/components/projects/ProjectsList';
 import { motion } from 'framer-motion';
+import ProjectsList from '@/components/projects/ProjectsList';
 
 export default function ProjectsPage() {
   return (
     <>
       {/* Magazine-style Header */}
-      <section className="relative pt-32 pb-24 overflow-hidden">
+      <section className="relative pt-32 pb-24 overflow-hidden" role="banner" aria-labelledby="projects-main-heading">
         {/* Background Elements - Fixed with inline styles */}
         <div 
           className="absolute inset-0"
           style={{
             background: 'linear-gradient(to bottom right, rgb(var(--background)), rgba(var(--accent), 0.03), rgba(var(--secondary-accent), 0.03))'
           }}
+          aria-hidden="true"
         />
         <div 
           className="absolute top-20 right-20 w-32 h-32 rounded-full blur-3xl"
@@ -21,6 +22,7 @@ export default function ProjectsPage() {
             backgroundColor: 'rgb(var(--accent))',
             opacity: 0.8
           }}
+          aria-hidden="true"
         />
         <div 
           className="absolute bottom-20 left-20 w-24 h-24 rounded-full blur-2xl"
@@ -28,6 +30,7 @@ export default function ProjectsPage() {
             backgroundColor: 'rgb(var(--secondary-accent))',
             opacity: 0.5
           }}
+          aria-hidden="true"
         />
         
         {/* Decorative grid pattern - Fixed with inline styles */}
@@ -37,6 +40,7 @@ export default function ProjectsPage() {
             backgroundImage: `linear-gradient(rgba(var(--foreground), 0.02) 1px, transparent 1px), linear-gradient(to right, rgba(var(--foreground), 0.02) 1px, transparent 1px)`,
             backgroundSize: '40px 40px'
           }}
+          aria-hidden="true"
         />
 
         <div className="container mx-auto px-4 relative z-10">
@@ -52,6 +56,7 @@ export default function ProjectsPage() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.6 }}
               className="flex items-center justify-center mb-8"
+              aria-hidden="true"
             >
               <div className="flex items-center space-x-4">
                 <div 
@@ -75,7 +80,7 @@ export default function ProjectsPage() {
               transition={{ delay: 0.4, duration: 0.8 }}
               className="text-center"
             >
-              <h1 className="text-6xl md:text-8xl font-display font-bold leading-none mb-6 tracking-tight">
+              <h1 id="projects-main-heading" className="text-6xl md:text-8xl font-display font-bold leading-none mb-6 tracking-tight">
                 <span className="block text-[rgb(var(--foreground))]">Selected</span>
                 <span className="block text-[rgb(var(--accent))] relative">
                   Works
@@ -86,6 +91,7 @@ export default function ProjectsPage() {
                     transition={{ delay: 1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                     className="absolute -bottom-2 left-0 w-full h-1 origin-left"
                     style={{ backgroundColor: 'rgb(var(--secondary-accent))' }}
+                    aria-hidden="true"
                   />
                 </span>
               </h1>
@@ -106,18 +112,20 @@ export default function ProjectsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.8 }}
               className="flex justify-center items-center space-x-12 mt-12 text-center"
+              role="list"
+              aria-label="Portfolio statistics"
             >
-              <div>
+              <div role="listitem">
                 <div className="text-2xl font-display font-bold text-[rgb(var(--accent))]">15+</div>
                 <div className="text-sm font-mono text-[rgb(var(--foreground))]/60 uppercase tracking-wide">Projects</div>
               </div>
-              <div className="w-px h-8 bg-[rgb(var(--foreground))]/20"></div>
-              <div>
+              <div className="w-px h-8 bg-[rgb(var(--foreground))]/20" aria-hidden="true"></div>
+              <div role="listitem">
                 <div className="text-2xl font-display font-bold text-[rgb(var(--secondary-accent))]">5</div>
                 <div className="text-sm font-mono text-[rgb(var(--foreground))]/60 uppercase tracking-wide">Years</div>
               </div>
-              <div className="w-px h-8 bg-[rgb(var(--foreground))]/20"></div>
-              <div>
+              <div className="w-px h-8 bg-[rgb(var(--foreground))]/20" aria-hidden="true"></div>
+              <div role="listitem">
                 <div className="text-2xl font-display font-bold text-[rgb(var(--accent))]">∞</div>
                 <div className="text-sm font-mono text-[rgb(var(--foreground))]/60 uppercase tracking-wide">Ideas</div>
               </div>
@@ -127,7 +135,7 @@ export default function ProjectsPage() {
       </section>
 
       {/* Projects List */}
-      <section className="py-16 relative">
+      <section className="py-16 relative" aria-labelledby="projects-list-heading">
         <div className="container mx-auto px-4">
           <ProjectsList />
         </div>
