@@ -29,10 +29,13 @@ export default function Projects() {
   };
 
   return (
-    <section className="py-20 md:py-32 relative">
+    <section 
+      className="py-20 md:py-32 relative" 
+      aria-labelledby="featured-projects-heading"
+    >
       {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-2/3 h-2/3 bg-[rgb(var(--accent))/5] -z-10 rounded-bl-[100px]"></div>
-      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-[rgb(var(--background))] -z-10"></div>
+      <div className="absolute top-0 right-0 w-2/3 h-2/3 bg-[rgb(var(--accent))/5] -z-10 rounded-bl-[100px]" aria-hidden="true"></div>
+      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-[rgb(var(--background))] -z-10" aria-hidden="true"></div>
       
       <div className="container mx-auto relative z-10">
         <motion.div
@@ -43,10 +46,17 @@ export default function Projects() {
           className="max-w-4xl mx-auto mb-20"
         >
           <motion.div variants={fadeInUp} className="text-center mb-4">
-            <span className="inline-block px-4 py-1 rounded-full bg-[rgb(var(--accent))/10 text-[rgb(var(--accent))] text-sm font-mono">Portfolio</span>
+            <span 
+              className="inline-block px-4 py-1 rounded-full bg-[rgb(var(--accent))/10] text-[rgb(var(--accent))] text-sm font-mono"
+              role="img"
+              aria-label="Portfolio section indicator"
+            >
+              Portfolio
+            </span>
           </motion.div>
           
           <motion.h2 
+            id="featured-projects-heading"
             variants={fadeInUp} 
             className="text-4xl md:text-5xl font-display text-center mb-6"
           >
@@ -55,13 +65,17 @@ export default function Projects() {
           
           <motion.p 
             variants={fadeInUp} 
-            className="text-lg text-[rgb(var(--foreground))/70 text-center max-w-2xl mx-auto"
+            className="text-lg text-[rgb(var(--foreground))/70] text-center max-w-2xl mx-auto"
           >
             A selection of my recent work in UI/UX design and frontend development.
           </motion.p>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+        <div 
+          className="grid grid-cols-1 md:grid-cols-2 gap-16"
+          role="list"
+          aria-label="Featured projects showcase"
+        >
           {allProjects.slice(0, 4).map((project, index) => (
             <FeaturedProjectCard 
               key={project.id} 
@@ -84,16 +98,17 @@ export default function Projects() {
           <Link 
             href="/projects"
             className="group inline-flex items-center relative overflow-hidden"
+            aria-label="View all projects in my portfolio"
           >
-            <span className="relative z-10 px-8 py-3 block bg-[rgb(var(--secondary-accent))/10 border border-[rgb(var(--secondary-accent))] text-[rgb(var(--secondary-accent))] rounded-lg font-medium transition-all duration-300 group-hover:text-white">
+            <span className="relative z-10 px-8 py-3 block bg-[rgb(var(--secondary-accent))/10] border border-[rgb(var(--secondary-accent))] text-[rgb(var(--secondary-accent))] rounded-lg font-medium transition-all duration-300 group-hover:text-white">
               <span className="flex items-center">
                 Explore All Projects
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </span>
             </span>
-            <span className="absolute inset-0 bg-[rgb(var(--secondary-accent))] w-0 transition-all duration-300 group-hover:w-full"></span>
+            <span className="absolute inset-0 bg-[rgb(var(--secondary-accent))] w-0 transition-all duration-300 group-hover:w-full" aria-hidden="true"></span>
           </Link>
         </motion.div>
       </div>
@@ -121,7 +136,7 @@ interface FeaturedProjectCardProps {
 
 function FeaturedProjectCard({ project, index, isHovered, onHover, onLeave }: FeaturedProjectCardProps) {
   return (
-    <motion.div
+    <motion.article
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -129,16 +144,27 @@ function FeaturedProjectCard({ project, index, isHovered, onHover, onLeave }: Fe
       className="group"
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
+      role="listitem"
     >
-      <Link href={`/projects/${project.slug}`} className="block">
-        <div className="relative overflow-hidden rounded-lg bg-[rgb(var(--muted))/50 h-64 mb-6">
+      <Link 
+        href={`/projects/${project.slug}`} 
+        className="block"
+        aria-label={`View details for ${project.title} project - ${project.description}`}
+      >
+        <div className="relative overflow-hidden rounded-lg bg-[rgb(var(--muted))/50] h-64 mb-6">
           {/* Project image/placeholder */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-[rgb(var(--foreground))]/30 font-display text-2xl">{project.title}</span>
+            <span className="text-[rgb(var(--foreground))]/30 font-display text-2xl" aria-hidden="true">
+              {project.title}
+            </span>
           </div>
           
-          {/* Tag */}
-          <div className="absolute top-4 left-4 bg-white dark:bg-[rgb(var(--background))] px-3 py-1 text-xs font-mono rounded-full shadow-sm z-10">
+          {/* Category tag */}
+          <div 
+            className="absolute top-4 left-4 bg-white dark:bg-[rgb(var(--background))] px-3 py-1 text-xs font-mono rounded-full shadow-sm z-10"
+            role="img"
+            aria-label={`Project category: ${project.category || 'Project'}`}
+          >
             {project.category || 'Project'}
           </div>
           
@@ -146,10 +172,14 @@ function FeaturedProjectCard({ project, index, isHovered, onHover, onLeave }: Fe
           <motion.div 
             className="absolute inset-0 bg-gradient-to-t from-[rgb(var(--accent))] to-[rgb(var(--secondary-accent))] opacity-0 transition-opacity"
             animate={{ opacity: isHovered ? 0.9 : 0 }}
+            aria-hidden="true"
           />
           
           {/* Project number */}
-          <div className="absolute top-3 right-4 text-4xl font-display font-light text-[rgb(var(--foreground))]/10">
+          <div 
+            className="absolute top-3 right-4 text-4xl font-display font-light text-[rgb(var(--foreground))]/10"
+            aria-label={`Featured project ${index + 1} of 4`}
+          >
             {(index + 1).toString().padStart(2, '0')}
           </div>
           
@@ -158,6 +188,7 @@ function FeaturedProjectCard({ project, index, isHovered, onHover, onLeave }: Fe
             className="absolute inset-0 flex items-center justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 1 : 0 }}
+            aria-hidden="true"
           >
             <span className="px-4 py-2 bg-white text-[rgb(var(--accent))] rounded font-medium text-sm">
               View Project
@@ -173,22 +204,31 @@ function FeaturedProjectCard({ project, index, isHovered, onHover, onLeave }: Fe
           {project.description}
         </p>
         
-        <div className="flex flex-wrap gap-2">
+        <div 
+          className="flex flex-wrap gap-2"
+          role="list"
+          aria-label={`Technologies used: ${project.tags.slice(0, 3).join(', ')}${project.tags.length > 3 ? ` and ${project.tags.length - 3} more` : ''}`}
+        >
           {project.tags.slice(0, 3).map((tag) => (
             <span 
               key={tag} 
               className="px-3 py-1 text-xs bg-[rgb(var(--accent))]/10 text-[rgb(var(--accent))] rounded-full"
+              role="listitem"
             >
               {tag}
             </span>
           ))}
           {project.tags.length > 3 && (
-            <span className="px-3 py-1 text-xs bg-[rgb(var(--foreground))]/5 text-[rgb(var(--foreground))]/70 rounded-full">
+            <span 
+              className="px-3 py-1 text-xs bg-[rgb(var(--foreground))]/5 text-[rgb(var(--foreground))]/70 rounded-full"
+              role="listitem"
+              aria-label={`${project.tags.length - 3} additional technologies`}
+            >
               +{project.tags.length - 3}
             </span>
           )}
         </div>
       </Link>
-    </motion.div>
+    </motion.article>
   );
 }

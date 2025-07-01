@@ -226,7 +226,7 @@ export default function ContactPage() {
                   />
                 </motion.div>
                 <motion.a
-                  href="mailto:houston@example.com"
+                  href="mailto:hctaylor@stanford.edu"
                   className="text-[rgb(var(--foreground))]/70 relative inline-block transition-all duration-300 cursor-pointer group"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: contactInfoInView ? 1 : 0 }}
@@ -243,10 +243,10 @@ export default function ContactPage() {
                     e.currentTarget.style.backgroundColor = 'transparent';
                     e.currentTarget.style.color = 'rgba(var(--foreground), 0.7)';
                   }}
-                  aria-label="Send email to Houston Taylor at houston@example.com"
+                  aria-label="Send email to Houston Taylor at hctaylor@stanford.edu"
                   role="button"
                 >
-                  houston@example.com
+                  hctaylor@stanford.edu
                   {/* Editorial checkmark */}
                   <motion.div
                     className="absolute -top-6 -right-4 text-[rgb(var(--secondary-accent))] font-bold text-xl"

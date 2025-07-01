@@ -37,7 +37,10 @@ export default function About() {
   ];
 
   return (
-    <section className="py-28 md:py-40">
+    <section 
+      className="py-28 md:py-40"
+      aria-labelledby="about-section-heading"
+    >
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
           <motion.div
@@ -50,8 +53,19 @@ export default function About() {
               visible: { opacity: 1 }
             }}
           >
-            <motion.span variants={fadeInLeft} className="text-[rgb(var(--accent))] text-sm tracking-widest uppercase mb-4 block font-mono">About Me</motion.span>
-            <motion.h2 variants={fadeInLeft} className="text-4xl md:text-5xl font-display mb-8 leading-tight">
+            <motion.span 
+              variants={fadeInLeft} 
+              className="text-[rgb(var(--accent))] text-sm tracking-widest uppercase mb-4 block font-mono"
+              role="img"
+              aria-label="About me section indicator"
+            >
+              About Me
+            </motion.span>
+            <motion.h2 
+              id="about-section-heading"
+              variants={fadeInLeft} 
+              className="text-4xl md:text-5xl font-display mb-8 leading-tight"
+            >
               Crafting Digital Experiences
             </motion.h2>
             <motion.div variants={fadeInLeft} className="space-y-6 text-lg text-[rgb(var(--foreground))]/80">
@@ -66,9 +80,10 @@ export default function About() {
               <Link 
                 href="/about"
                 className="inline-flex items-center px-6 py-3 rounded-lg bg-[rgb(var(--accent))]/10 text-[rgb(var(--accent))] hover:bg-[rgb(var(--accent))]/20 transition-all duration-300 group"
+                aria-label="Learn more about Houston Taylor on the full about page"
               >
                 More About Me
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </Link>
@@ -94,6 +109,7 @@ export default function About() {
               variants={fadeInRight}
               className="absolute -bottom-6 -right-6 w-2/3 h-2/3 border-2 border-[rgb(var(--accent))] rounded-xl -z-10"
               transition={{ delay: 0.4 }}
+              aria-hidden="true"
             ></motion.div>
 
             {/* Skills section with improved spacing */}
@@ -101,19 +117,26 @@ export default function About() {
               variants={fadeInRight}
               className="mt-16 space-y-6"
               transition={{ delay: 0.6 }}
+              role="region"
+              aria-labelledby="skills-preview-heading"
             >
-              <h3 className="text-xl font-display mb-4">Skills & Expertise</h3>
+              <h3 id="skills-preview-heading" className="text-xl font-display mb-4">Skills & Expertise</h3>
               
               {skills.map((skillGroup, i) => (
                 <div key={skillGroup.category} className="space-y-3">
                   <h4 className="text-[rgb(var(--secondary-accent))] font-mono text-sm uppercase tracking-wider">
                     {skillGroup.category}
                   </h4>
-                  <div className="flex flex-wrap gap-2">
+                  <div 
+                    className="flex flex-wrap gap-2"
+                    role="list"
+                    aria-label={`${skillGroup.category} skills`}
+                  >
                     {skillGroup.items.map(skill => (
                       <span 
                         key={skill} 
                         className="px-3 py-1 text-sm bg-[rgb(var(--accent))]/10 text-[rgb(var(--foreground))] rounded-md"
+                        role="listitem"
                       >
                         {skill}
                       </span>
