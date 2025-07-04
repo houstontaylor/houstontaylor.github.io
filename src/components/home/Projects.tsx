@@ -30,7 +30,7 @@ export default function Projects() {
 
   return (
     <section 
-      className="py-20 md:py-32 relative" 
+      className="py-8 md:py-32 relative" 
       aria-labelledby="featured-projects-heading"
     >
       {/* Background decoration */}
@@ -97,18 +97,18 @@ export default function Projects() {
         >
           <Link 
             href="/projects"
-            className="group inline-flex items-center relative overflow-hidden"
-            aria-label="View all projects in my portfolio"
+            className="group inline-flex items-center relative"
+            aria-label="See more projects in my portfolio"
           >
-            <span className="relative z-10 px-8 py-3 block bg-[rgb(var(--secondary-accent))/10] border border-[rgb(var(--secondary-accent))] text-[rgb(var(--secondary-accent))] rounded-lg font-medium transition-all duration-300 group-hover:text-white">
-              <span className="flex items-center">
-                Explore All Projects
+            <span className="relative px-8 py-3 block border-2 border-[rgb(var(--secondary-accent))] text-[rgb(var(--secondary-accent))] rounded-lg font-medium transition-all duration-300 hover:shadow-lg overflow-hidden group-hover:text-white">
+              <span className="relative z-10 flex items-center">
+                See More Projects
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </span>
+              <span className="absolute inset-0 bg-[rgb(var(--secondary-accent))] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg" aria-hidden="true"></span>
             </span>
-            <span className="absolute inset-0 bg-[rgb(var(--secondary-accent))] w-0 transition-all duration-300 group-hover:w-full" aria-hidden="true"></span>
           </Link>
         </motion.div>
       </div>

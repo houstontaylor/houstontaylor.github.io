@@ -16,7 +16,7 @@ export default function Home() {
         <Projects />
         
         {/* Divider with animation */}
-        <div className="container mx-auto my-4">
+        <div className="container mx-auto my-1">
           <motion.div 
             className="h-px bg-gradient-to-r from-transparent via-[rgb(var(--accent))] to-transparent opacity-30"
             initial={{ scaleX: 0 }}

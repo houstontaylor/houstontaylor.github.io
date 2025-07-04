@@ -199,14 +199,14 @@ export default function Hero() {
               className="group relative overflow-hidden"
               aria-label="Contact Houston Taylor to discuss projects"
             >
-              <span className="relative z-10 px-8 py-3 block border-2 border-[rgb(var(--secondary-accent))] text-[rgb(var(--secondary-accent))] rounded-lg font-medium transition-all duration-300 hover:shadow-lg">
-                <span className="flex items-center group-hover:text-white transition-colors duration-300">
+              <span className="relative px-8 py-3 block border-2 border-[rgb(var(--secondary-accent))] text-[rgb(var(--secondary-accent))] rounded-lg font-medium transition-all duration-300 hover:shadow-lg overflow-hidden">
+                <span className="relative z-10 flex items-center group-hover:text-white transition-colors duration-300">
                   Get In Touch
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </span>
-                <span className="absolute inset-0 bg-[rgb(var(--secondary-accent))] w-0 transition-all duration-300 group-hover:w-full z-0" aria-hidden="true"></span>
+                <span className="absolute inset-0 bg-[rgb(var(--secondary-accent))] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" aria-hidden="true"></span>
               </span>
             </Link>
           </motion.div>
@@ -214,41 +214,43 @@ export default function Hero() {
       </div>
       
       {/* Scroll indicator */}
-      <motion.div 
-        className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-      >
-        <button
-          onClick={scrollToNextSection}
-          className="flex flex-col items-center group cursor-pointer bg-transparent border-none outline-none focus:outline-none rounded-lg p-2"
-          aria-label="Scroll down to explore more content"
+      <div className="absolute bottom-0 left-0 right-0 flex justify-center">
+        <motion.div 
+          className="flex flex-col items-center"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
         >
-          <span className="text-[rgb(var(--foreground))/40 text-sm font-mono mb-2 group-hover:text-[rgb(var(--accent))] transition-colors duration-300">
-            Scroll to explore
-          </span>
-          <motion.div 
-            className="w-6 h-10 border-2 border-[rgb(var(--accent))/30 rounded-full flex justify-center group-hover:border-[rgb(var(--accent))]/60 transition-colors duration-300"
-            initial={{ opacity: 0.5 }}
-            animate={{ opacity: [0.3, 0.7, 0.3] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            aria-hidden="true"
+          <button
+            onClick={scrollToNextSection}
+            className="flex flex-col items-center group cursor-pointer bg-transparent border-none outline-none focus:outline-none rounded-lg p-2"
+            aria-label="Scroll down to explore more content"
           >
+            <span className="text-[rgb(var(--foreground))]/40 text-sm font-mono mb-2 group-hover:text-[rgb(var(--accent))] transition-colors duration-300">
+              Scroll to explore
+            </span>
             <motion.div 
-              className="w-1.5 h-1.5 bg-[rgb(var(--accent))] rounded-full"
-              animate={{ 
-                y: [2, 15, 2] 
-              }}
-              transition={{ 
-                duration: 2,
-                repeat: Infinity,
-                repeatType: 'loop'
-              }}
-            />
-          </motion.div>
-        </button>
-      </motion.div>
+              className="w-6 h-10 border-2 border-[rgb(var(--accent))]/30 rounded-full flex justify-center group-hover:border-[rgb(var(--accent))]/60 transition-colors duration-300"
+              initial={{ opacity: 0.5 }}
+              animate={{ opacity: [0.3, 0.7, 0.3] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              aria-hidden="true"
+            >
+              <motion.div 
+                className="w-1.5 h-1.5 bg-[rgb(var(--accent))] rounded-full"
+                animate={{ 
+                  y: [2, 15, 2] 
+                }}
+                transition={{ 
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatType: 'loop'
+                }}
+              />
+            </motion.div>
+          </button>
+        </motion.div>
+      </div>
     </section>
   );
 }

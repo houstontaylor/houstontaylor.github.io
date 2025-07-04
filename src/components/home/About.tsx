@@ -2,148 +2,289 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function About() {
-  const fadeInLeft = {
-    hidden: { opacity: 0, x: -20 },
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
-      x: 0,
-      transition: { 
-        duration: 0.8, 
-        ease: [0.22, 1, 0.36, 1] 
+      y: 0,
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+    }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3
       }
     }
   };
 
-  const fadeInRight = {
-    hidden: { opacity: 0, x: 20 },
-    visible: { 
-      opacity: 1, 
-      x: 0,
-      transition: { 
-        duration: 0.8, 
-        ease: [0.22, 1, 0.36, 1],
-        delay: 0.2
-      }
-    }
-  };
+  // Simplified skills for home page preview
+  const highlightSkills = [
+    { name: "UI/UX Design", color: "accent", description: "Creating intuitive interfaces" },
+    { name: "React", color: "secondary-accent", description: "Building dynamic applications" },
+    { name: "TypeScript", color: "accent", description: "Type-safe development" },
+    { name: "Figma", color: "secondary-accent", description: "Design & prototyping" }
+  ];
 
-  // Skills with consistent categorization
-  const skills = [
-    { category: "Design", items: ["UI/UX Design", "Wireframing", "Prototyping", "User Research", "Figma", "Adobe XD"] },
-    { category: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "GSAP"] },
-    { category: "Other", items: ["Git", "Responsive Design", "Accessibility", "SEO", "Performance Optimization"] }
+  const stats = [
+    { number: "3+", label: "Years Experience", icon: "⚡" },
+    { number: "15+", label: "Projects Built", icon: "🚀" },
+    { number: "∞", label: "Ideas Generated", icon: "💡" }
   ];
 
   return (
     <section 
-      className="py-28 md:py-40"
+      className="py-20 md:py-32 relative overflow-hidden"
       aria-labelledby="about-section-heading"
     >
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
-          <motion.div
-            className="md:col-span-7"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 1 }
-            }}
+      {/* Magazine-style background elements */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        
+        {/* Floating geometric shapes */}
+        <motion.div 
+          className="absolute top-1/4 right-10 w-24 h-24 border-2 border-[rgb(var(--accent))]/20 rounded-full"
+          animate={{ 
+            rotate: 360,
+            scale: [1, 1.1, 1],
+          }}
+          transition={{ 
+            rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+            scale: { duration: 4, repeat: Infinity }
+          }}
+        />
+        
+        {/* Magazine-style dot pattern */}
+        <div 
+          className="absolute bottom-1/4 left-10 w-40 h-40 opacity-20"
+          style={{
+            backgroundImage: 'radial-gradient(rgb(var(--secondary-accent)) 2px, transparent 2px)',
+            backgroundSize: '15px 15px'
+          }}
+        />
+      </div>
+
+      <div className="container mx-auto relative z-10">
+        {/* Magazine-style header */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="text-center mb-16"
+        >
+          <motion.div variants={fadeInUp} className="mb-4">
+            <span className="inline-block px-4 py-1 rounded-full bg-[rgb(var(--secondary-accent))]/10 text-[rgb(var(--secondary-accent))] text-sm font-mono tracking-wide">
+              MEET THE DESIGNER
+            </span>
+          </motion.div>
+          
+          <motion.h2 
+            id="about-section-heading"
+            variants={fadeInUp} 
+            className="text-4xl md:text-6xl font-display mb-6 leading-tight"
           >
-            <motion.span 
-              variants={fadeInLeft} 
-              className="text-[rgb(var(--accent))] text-sm tracking-widest uppercase mb-4 block font-mono"
-              role="img"
-              aria-label="About me section indicator"
-            >
-              About Me
-            </motion.span>
-            <motion.h2 
-              id="about-section-heading"
-              variants={fadeInLeft} 
-              className="text-4xl md:text-5xl font-display mb-8 leading-tight"
-            >
-              Crafting Digital Experiences
-            </motion.h2>
-            <motion.div variants={fadeInLeft} className="space-y-6 text-lg text-[rgb(var(--foreground))]/80">
-              <p>
-                I'm a passionate UI/UX designer and frontend developer studying Computer Science and Human-Computer Interaction at Stanford University. My focus is on creating intuitive and engaging digital experiences that bridge the gap between users and technology.
+            Hey, I'm{" "}
+            <span className="relative inline-block">
+              <motion.span 
+                className="absolute -bottom-1 left-0 w-full h-4 bg-[rgb(var(--accent))]/40 rounded-sm z-0"
+                initial={{ scaleX: 0, originX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                aria-hidden="true"
+              />
+              <span className="relative z-10">Houston</span>
+            </span>
+          </motion.h2>
+          
+          <motion.p 
+            variants={fadeInUp} 
+            className="text-xl text-[rgb(var(--foreground))]/70 max-w-2xl mx-auto leading-relaxed"
+          >
+            A Stanford grad student crafting digital experiences that make people{" "}
+            <span className="relative inline-block text-[rgb(var(--accent))] font-medium">
+              smile
+              <motion.span 
+                className="absolute -bottom-0.5 left-0 w-full h-0.5 bg-[rgb(var(--accent))] rounded-full"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 1.2 }}
+                aria-hidden="true"
+              />
+            </span> and{" "}
+            <span className="relative inline-block text-[rgb(var(--secondary-accent))] font-medium">
+              succeed
+              <motion.span 
+                className="absolute -bottom-0.5 left-0 w-full h-0.5 bg-[rgb(var(--secondary-accent))] rounded-full"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 1.4 }}
+                aria-hidden="true"
+              />
+            </span>.
+          </motion.p>
+        </motion.div>
+
+        {/* Two-column layout with better spacing */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+          
+          {/* Left Column - Story & Stats */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="space-y-8"
+          >
+            {/* Story snippet */}
+            <div className="prose prose-lg max-w-none">
+              <p className="text-lg text-[rgb(var(--foreground))]/80 leading-relaxed">
+                I'm passionate about bridging the gap between{" "}
+                <strong className="text-[rgb(var(--accent))]">beautiful design</strong> and{" "}
+                <strong className="text-[rgb(var(--secondary-accent))]">functional code</strong>.
               </p>
-              <p>
-                With experience in user research, wireframing, prototyping, and frontend development, I bring a holistic approach to creating digital products that users love.
+              <p className="text-base text-[rgb(var(--foreground))]/70">
+                Currently studying Computer Science at Stanford with a focus on Human-Computer Interaction,
+                I love turning complex problems into simple, elegant solutions.
               </p>
-            </motion.div>
-            <motion.div variants={fadeInLeft} className="mt-10">
+            </div>
+
+            {/* Fun stats */}
+            <div className="grid grid-cols-3 gap-6">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+                  className="text-center group"
+                >
+                  <div className="text-2xl mb-2 transition-transform duration-300 group-hover:scale-110">
+                    {stat.icon}
+                  </div>
+                  <div className="text-2xl font-display font-bold text-[rgb(var(--accent))] mb-1">
+                    {stat.number}
+                  </div>
+                  <div className="text-sm text-[rgb(var(--foreground))]/60 font-mono">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* CTA Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
               <Link 
                 href="/about"
-                className="inline-flex items-center px-6 py-3 rounded-lg bg-[rgb(var(--accent))]/10 text-[rgb(var(--accent))] hover:bg-[rgb(var(--accent))]/20 transition-all duration-300 group"
+                className="group inline-flex items-center relative pt-8"
                 aria-label="Learn more about Houston Taylor on the full about page"
               >
-                More About Me
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
+                <span className="relative px-8 py-3 block border-2 border-[rgb(var(--secondary-accent))] text-[rgb(var(--secondary-accent))] rounded-lg font-medium transition-all duration-300 hover:shadow-lg overflow-hidden group-hover:text-white">
+                  <span className="relative z-10 flex items-center">
+                    Learn More About Me
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </span>
+                  <span className="absolute inset-0 bg-[rgb(var(--secondary-accent))] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg" aria-hidden="true"></span>
+                </span>
               </Link>
             </motion.div>
           </motion.div>
-          
-          <motion.div
-            className="md:col-span-5 relative"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <motion.div 
-              variants={fadeInRight}
-              className="aspect-square bg-[rgb(var(--foreground))]/5 rounded-xl overflow-hidden"
-            >
-              {/* Replace with your actual image */}
-              <div className="h-full w-full flex items-center justify-center">
-                <span className="text-[rgb(var(--foreground))]/30">Your Photo</span>
-              </div>
-            </motion.div>
-            <motion.div 
-              variants={fadeInRight}
-              className="absolute -bottom-6 -right-6 w-2/3 h-2/3 border-2 border-[rgb(var(--accent))] rounded-xl -z-10"
-              transition={{ delay: 0.4 }}
-              aria-hidden="true"
-            ></motion.div>
 
-            {/* Skills section with improved spacing */}
-            <motion.div
-              variants={fadeInRight}
-              className="mt-16 space-y-6"
-              transition={{ delay: 0.6 }}
-              role="region"
-              aria-labelledby="skills-preview-heading"
-            >
-              <h3 id="skills-preview-heading" className="text-xl font-display mb-4">Skills & Expertise</h3>
-              
-              {skills.map((skillGroup, i) => (
-                <div key={skillGroup.category} className="space-y-3">
-                  <h4 className="text-[rgb(var(--secondary-accent))] font-mono text-sm uppercase tracking-wider">
-                    {skillGroup.category}
-                  </h4>
-                  <div 
-                    className="flex flex-wrap gap-2"
-                    role="list"
-                    aria-label={`${skillGroup.category} skills`}
-                  >
-                    {skillGroup.items.map(skill => (
-                      <span 
-                        key={skill} 
-                        className="px-3 py-1 text-sm bg-[rgb(var(--accent))]/10 text-[rgb(var(--foreground))] rounded-md"
-                        role="listitem"
-                      >
-                        {skill}
-                      </span>
-                    ))}
+          {/* Right Column - Interactive Skills */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="space-y-8"
+          >
+            {/* Skills preview header */}
+            <div className="text-center">
+              <h3 className="text-2xl font-display font-bold mb-2">
+                What I <span className="text-[rgb(var(--accent))]">Do</span>
+              </h3>
+              <p className="text-[rgb(var(--foreground))]/60 text-sm font-mono">
+                Hover to explore my toolkit
+              </p>
+            </div>
+
+            {/* Interactive skill cards */}
+            <div className="grid grid-cols-2 gap-4">
+              {highlightSkills.map((skill, index) => (
+                <motion.div
+                  key={skill.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+                  className={`relative p-6 rounded-xl border-2 border-[rgb(var(--${skill.color}))]/20 bg-[rgb(var(--${skill.color}))]/5 transition-all duration-300 cursor-pointer group hover:border-[rgb(var(--${skill.color}))] hover:bg-[rgb(var(--${skill.color}))]/10 hover:scale-105`}
+                  onMouseEnter={() => setHoveredSkill(skill.name)}
+                  onMouseLeave={() => setHoveredSkill(null)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${skill.name}: ${skill.description}`}
+                >
+                  <div className={`text-[rgb(var(--${skill.color}))] font-bold text-lg mb-2 transition-colors duration-300`}>
+                    {skill.name}
                   </div>
-                </div>
+                  <motion.div 
+                    className="text-sm text-[rgb(var(--foreground))]/70 overflow-hidden"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ 
+                      height: hoveredSkill === skill.name ? 'auto' : 0,
+                      opacity: hoveredSkill === skill.name ? 1 : 0
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {skill.description}
+                  </motion.div>
+                  
+                  {/* Decorative corner accent */}
+                  <div className={`absolute top-0 right-0 w-6 h-6 bg-[rgb(var(--${skill.color}))] rounded-bl-xl rounded-tr-xl opacity-20 group-hover:opacity-40 transition-opacity duration-300`} aria-hidden="true" />
+                </motion.div>
               ))}
+            </div>
+
+            {/* Skill categories teaser */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="text-center p-6 bg-[rgb(var(--foreground))]/5 rounded-xl border border-[rgb(var(--foreground))]/10"
+            >
+              <div className="text-sm text-[rgb(var(--foreground))]/60 mb-2">
+                Plus expertise in
+              </div>
+              <div className="flex flex-wrap gap-2 justify-center">
+                {["Design Systems", "Accessibility", "Performance", "User Research"].map((item) => (
+                  <span 
+                    key={item}
+                    className="px-3 py-1 text-xs bg-[rgb(var(--accent))]/10 text-[rgb(var(--foreground))]/70 rounded-full"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
             </motion.div>
           </motion.div>
         </div>
