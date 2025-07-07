@@ -11,6 +11,12 @@ interface ProjectPageProps {
 
 type Project = typeof allProjects[0];
 
+export function generateStaticParams() {
+  return allProjects.map((project) => ({
+    slug: project.slug,
+  }));
+}
+
 export default function ProjectPage({ params }: ProjectPageProps) {
   const project = allProjects.find((p: Project) => p.slug === params.slug);
 
