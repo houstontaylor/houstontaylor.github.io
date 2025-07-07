@@ -8,7 +8,7 @@ interface ProjectPageProps {
     slug: string;
   };
 }
-
+//test
 type Project = typeof allProjects[0];
 
 export function generateStaticParams() {
