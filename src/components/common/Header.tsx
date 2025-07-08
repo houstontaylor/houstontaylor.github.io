@@ -138,7 +138,7 @@ export default function Header () {
             <Link 
               href="/" 
               className="text-2xl font-display font-bold text-[rgb(var(--foreground))] hover:text-[rgb(var(--accent))] transition-colors"
-              aria-label="Houston Taylor - Return to homepage"
+              aria-label="Logo - Return to homepage"
             >
               HT
             </Link>

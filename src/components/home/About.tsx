@@ -36,8 +36,8 @@ export default function About() {
   ];
 
   const stats = [
-    { number: "3+", label: "Years Experience", icon: "⚡" },
-    { number: "15+", label: "Projects Built", icon: "🚀" },
+    { number: "5+", label: "Years Experience", icon: "⚡" },
+    { number: "8+", label: "Projects Built", icon: "🚀" },
     { number: "∞", label: "Ideas Generated", icon: "💡" }
   ];
 
@@ -110,7 +110,7 @@ export default function About() {
             variants={fadeInUp} 
             className="text-xl text-[rgb(var(--foreground))]/70 max-w-2xl mx-auto leading-relaxed"
           >
-            A Stanford grad student crafting digital experiences that make people{" "}
+            A recent Stanford graduate creating digital experiences that make people{" "}
             <span className="relative inline-block text-[rgb(var(--accent))] font-medium">
               smile
               <motion.span 
@@ -155,7 +155,7 @@ export default function About() {
                 <strong className="text-[rgb(var(--secondary-accent))]">functional code</strong>.
               </p>
               <p className="text-base text-[rgb(var(--foreground))]/70">
-                Currently studying Computer Science at Stanford with a focus on Human-Computer Interaction,
+                Fresh out of Stanford with my Master's in Computer Science and a focus on Human-Computer Interaction,
                 I love turning complex problems into simple, elegant solutions.
               </p>
             </div>
