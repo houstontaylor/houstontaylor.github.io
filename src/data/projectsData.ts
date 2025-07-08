@@ -3,7 +3,7 @@ export const allProjects = [
   {
     id: '1',
     title: 'PodBot',
-    description: 'An accessible AI chatbot that answers podcast listener questions using past episodes, with full transcripts and source citations.',
+    description: 'An accessible AI chatbot that answers podcast listener questions in the style of the host using past episodes, with full transcripts and source citations.',
     longDescription: 'Started as an independent study combining accessibility work and AI chatbot development. PodBot answers podcast listeners\' questions in the host\'s style using only past episodes as sources, with accessible transcripts and episode carousels.',
     
     // Basic logistics
@@ -97,9 +97,7 @@ export const allProjects = [
     
     // All project links
     links: {
-      figma: 'https://figma.com/podbot-designs', // You'll replace with actual Figma link
-      currentGithub: 'https://github.com/sunaolab/PodBot',
-      oldGithub: 'https://github.com/ori-spector/pmb_live',
+      figma: 'https://figma.com/podbot-designs', // Placeholder link
       article: 'https://jskfellows.stanford.edu/can-we-build-an-ai-chatbot-for-journalism-79ffe39e053e',
       originalPaper: 'https://docs.google.com/document/d/1mXWqRyPfH1qAVAQ-qAr-T9gQ7gjjIJISWCkYiX5RJ1I/edit?tab=t.0#heading=h.gzw7f9xr9l24'
     },
