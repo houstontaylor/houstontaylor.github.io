@@ -55,8 +55,8 @@ export default function Contact() {
   const contactMethods = [
     { 
       type: 'Email',
-      value: 'hctaylor@stanford.edu',
-      href: 'mailto:hctaylor@stanford.edu',
+      value: 'houstonctaylor@gmail.com',
+      href: 'mailto:houstonctaylor@gmail.com',
       icon: '✉️',
       description: 'Best for project inquiries'
     },

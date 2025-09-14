@@ -72,13 +72,13 @@ export default function Footer() {
                 San Francisco · California
               </div>
               <motion.a 
-                href="mailto:hctaylor@stanford.edu"
+                href="mailto:houstonctaylor@gmail.com"
                 className="text-[rgb(var(--accent))] hover:underline inline-flex items-center text-sm"
                 whileHover={{ x: 3 }}
                 transition={{ duration: 0.2 }}
                 aria-label="Send email to Houston Taylor"
               >
-                hctaylor@stanford.edu
+                houstonctaylor@gmail.com
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1" aria-hidden="true">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>

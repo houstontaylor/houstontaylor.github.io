@@ -39,12 +39,7 @@ export const metadata = {
         alt: 'Houston Taylor',
       },
     ],
-  },
-  twitter: {
-    handle: '@houstontaylor',
-    site: '@houstontaylor',
-    cardType: 'summary_large_image',
-  },
+  }
 };
 
 export default function RootLayout({

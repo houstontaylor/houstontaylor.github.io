@@ -257,7 +257,7 @@ export default function ProjectsList() {
             <span className="text-[rgb(var(--foreground))]/50 text-sm">or</span>
             
             <Link 
-              href="mailto:hctaylor@stanford.edu"
+              href="mailto:houstonctaylor@gmail.com"
               className="group relative overflow-hidden"
               aria-label="Email Houston Taylor to discuss projects"
             >
